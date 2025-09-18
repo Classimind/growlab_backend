@@ -6,7 +6,7 @@ from app.core.config import settings
 from contextlib import asynccontextmanager
 from app.db.clients import connect_db,close_db
 from app.services.cache import connect_redis,close_redis
-
+from app.api.v1 import plant_database
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -34,7 +34,7 @@ app.add_middleware(
 # app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
 
 # Include Routers (API Versioning)
-# app.include_router(users.router, prefix="/v1/users", tags=["Users"])
+app.include_router(plant_database.router, prefix="/plants", tags=["plants"])
 
 # Root endpoint
 @app.get("/")

@@ -1,0 +1,950 @@
+[
+  {
+    "plant_name": "Lettuce",
+    "type": "Leafy Green",
+    "ph_range": "5.5–6.5",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "30–45",
+    "notes": "Fast-growing, ideal for beginners."
+  },
+  {
+    "plant_name": "Spinach",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "35–45",
+    "notes": "Prefers cooler temperatures."
+  },
+  {
+    "plant_name": "Kale",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "50–60",
+    "notes": "Nutrient-dense, grows well in various systems."
+  },
+  {
+    "plant_name": "Arugula",
+    "type": "Leafy Green",
+    "ph_range": "5.5–6.8",
+    "ec_range": "0.8–1.4",
+    "light_hours": "12–16",
+    "growth_cycle_days": "30–40",
+    "notes": "Fast-growing, ideal for beginners."
+  },
+  {
+    "plant_name": "Bok Choy",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "30–45",
+    "notes": "Thrives in cooler climates."
+  },
+  {
+    "plant_name": "Basil",
+    "type": "Herb",
+    "ph_range": "5.5–6.5",
+    "ec_range": "1.5–2.0",
+    "light_hours": "14–16",
+    "growth_cycle_days": "60–90",
+    "notes": "Requires consistent pruning."
+  },
+  {
+    "plant_name": "Mint",
+    "type": "Herb",
+    "ph_range": "5.5–6.0",
+    "ec_range": "2.0–2.4",
+    "light_hours": "14–16",
+    "growth_cycle_days": "60–90",
+    "notes": "Vigorous grower, needs containment."
+  },
+  {
+    "plant_name": "Cilantro",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.5–2.0",
+    "light_hours": "14–16",
+    "growth_cycle_days": "40–50",
+    "notes": "Bolts quickly in heat."
+  },
+  {
+    "plant_name": "Parsley",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.5–2.0",
+    "light_hours": "14–16",
+    "growth_cycle_days": "70–90",
+    "notes": "Slow germination, but hardy."
+  },
+  {
+    "plant_name": "Chives",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.5–2.0",
+    "light_hours": "14–16",
+    "growth_cycle_days": "60–80",
+    "notes": "Perennial, regrows after cutting."
+  },
+  {
+    "plant_name": "Strawberries",
+    "type": "Fruit",
+    "ph_range": "5.8–6.2",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "120–150",
+    "notes": "Requires pollination assistance."
+  },
+  {
+    "plant_name": "Tomatoes",
+    "type": "Fruit",
+    "ph_range": "5.5–6.5",
+    "ec_range": "2.0–3.0",
+    "light_hours": "14–16",
+    "growth_cycle_days": "60–85",
+    "notes": "Needs support and pruning."
+  },
+  {
+    "plant_name": "Peppers",
+    "type": "Fruit",
+    "ph_range": "5.5–6.5",
+    "ec_range": "2.0–3.0",
+    "light_hours": "14–16",
+    "growth_cycle_days": "70–90",
+    "notes": "Sensitive to temperature fluctuations."
+  },
+  {
+    "plant_name": "Cucumbers",
+    "type": "Fruit",
+    "ph_range": "5.5–6.5",
+    "ec_range": "2.0–3.0",
+    "light_hours": "14–16",
+    "growth_cycle_days": "50–70",
+    "notes": "Requires ample space for vines."
+  },
+  {
+    "plant_name": "Celery",
+    "type": "Vegetable",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.5–2.0",
+    "light_hours": "12–16",
+    "growth_cycle_days": "90–120",
+    "notes": "High water content, needs consistent moisture."
+  },
+  {
+    "plant_name": "Water Spinach",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "30–50",
+    "notes": "Aquatic plant, requires constant moisture."
+  },
+  {
+    "plant_name": "Tomatillo",
+    "type": "Fruit",
+    "ph_range": "5.5–6.5",
+    "ec_range": "1.5–2.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "70–90",
+    "notes": "Tangy flavor, used in salsas."
+  },
+  {
+    "plant_name": "Turnip",
+    "type": "Root Vegetable",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.5–2.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "50–70",
+    "notes": "Mild, sweet flavor, quick-growing."
+  },
+  {
+    "plant_name": "Okra",
+    "type": "Vegetable",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.5–2.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "50–70",
+    "notes": "High in fiber, mucilaginous pods."
+  },
+  {
+    "plant_name": "Mustard Greens",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "30–45",
+    "notes": "Spicy leaves, fast-growing."
+  },
+  {
+    "plant_name": "Radish",
+    "type": "Root Vegetable",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "25–35",
+    "notes": "Fast-growing, ideal for microgreens."
+  },
+  {
+    "plant_name": "Beet Greens",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–2.0",
+    "light_hours": "12–16",
+    "growth_cycle_days": "40–50",
+    "notes": "Edible greens, also produces roots."
+  },
+  {
+    "plant_name": "Sunflower Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–14",
+    "notes": "High in protein and fast-growing."
+  },
+  {
+    "plant_name": "Pea Shoots",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Sweet flavor, ideal for salads."
+  },
+  {
+    "plant_name": "Broccoli Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "8–12",
+    "notes": "Rich in vitamins and antioxidants."
+  },
+  {
+    "plant_name": "Oregano",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.5–2.0",
+    "light_hours": "14–16",
+    "growth_cycle_days": "90–120",
+    "notes": "Perennial herb with aromatic leaves."
+  },
+  {
+    "plant_name": "Thyme",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "14–16",
+    "growth_cycle_days": "80–100",
+    "notes": "Drought-tolerant, aromatic herb."
+  },
+  {
+    "plant_name": "Rosemary",
+    "type": "Herb",
+    "ph_range": "6.0–7.5",
+    "ec_range": "1.5–2.0",
+    "light_hours": "14–16",
+    "growth_cycle_days": "100–120",
+    "notes": "Woody perennial, requires pruning."
+  },
+  {
+    "plant_name": "Swiss Chard",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.5–2.0",
+    "light_hours": "12–16",
+    "growth_cycle_days": "50–60",
+    "notes": "Colorful stems, nutrient-rich."
+  },
+  {
+    "plant_name": "Endive",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "45–60",
+    "notes": "Slightly bitter leaves, ideal for salads."
+  },
+  {
+    "plant_name": "Mâche (Lamb’s Lettuce)",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "40–50",
+    "notes": "Tender leaves, grows well in cooler conditions."
+  },
+  {
+    "plant_name": "Eggplant",
+    "type": "Vegetable",
+    "ph_range": "5.5–6.5",
+    "ec_range": "2.0–3.0",
+    "light_hours": "14–16",
+    "growth_cycle_days": "70–90",
+    "notes": "Requires pollination and support."
+  },
+  {
+    "plant_name": "Zucchini",
+    "type": "Vegetable",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.8–2.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "50–70",
+    "notes": "Prolific, needs space for spreading vines."
+  },
+  {
+    "plant_name": "Sweet Corn (baby shoots)",
+    "type": "Vegetable",
+    "ph_range": "6.0–6.8",
+    "ec_range": "1.5–2.5",
+    "light_hours": "14–16",
+    "growth_cycle_days": "15–20",
+    "notes": "Microgreen version, sweet flavor."
+  },
+  {
+    "plant_name": "Melons (small varieties)",
+    "type": "Fruit",
+    "ph_range": "6.0–6.5",
+    "ec_range": "1.8–2.5",
+    "light_hours": "14–16",
+    "growth_cycle_days": "70–90",
+    "notes": "Requires pollination, best for dwarf varieties."
+  },
+  {
+    "plant_name": "Tarragon",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "14–16",
+    "growth_cycle_days": "90–120",
+    "notes": "Fragrant herb, good for flavoring dishes."
+  },
+  {
+    "plant_name": "Sage",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "14–16",
+    "growth_cycle_days": "90–120",
+    "notes": "Perennial herb, woody stems, aromatic."
+  },
+  {
+    "plant_name": "Oca (Oxalis tuberosa)",
+    "type": "Root Vegetable",
+    "ph_range": "5.5–6.5",
+    "ec_range": "1.5–2.0",
+    "light_hours": "12–14",
+    "growth_cycle_days": "90–120",
+    "notes": "Colorful tubers, edible leaves."
+  },
+  {
+    "plant_name": "Amaranth",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–2.0",
+    "light_hours": "12–16",
+    "growth_cycle_days": "30–45",
+    "notes": "Bright-colored leaves, nutrient-rich."
+  },
+  {
+    "plant_name": "Kohlrabi",
+    "type": "Vegetable",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.5–2.0",
+    "light_hours": "12–16",
+    "growth_cycle_days": "55–70",
+    "notes": "Edible bulbous stem, mild flavor."
+  },
+  {
+    "plant_name": "Micro Basil",
+    "type": "Microgreen",
+    "ph_range": "5.5–6.5",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Small leaves, aromatic, fast-growing."
+  },
+  {
+    "plant_name": "Micro Cilantro",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–14",
+    "notes": "Tender leaves, flavorful for garnishing."
+  },
+  {
+    "plant_name": "Micro Kale",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "8–12",
+    "notes": "High in nutrients, fast-growing microgreen."
+  },
+  {
+    "plant_name": "Chervil",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–14",
+    "growth_cycle_days": "60–80",
+    "notes": "Delicate herb, slightly anise flavor."
+  },
+  {
+    "plant_name": "Sorrel",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "40–50",
+    "notes": "Tangy leaves, suitable for salads."
+  },
+  {
+    "plant_name": "Lavender",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "14–16",
+    "growth_cycle_days": "90–120",
+    "notes": "Fragrant herb, often used for culinary and decorative purposes."
+  },
+  {
+    "plant_name": "Marjoram",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "60–80",
+    "notes": "Sweet, mild herb, ideal for seasoning."
+  },
+  {
+    "plant_name": "Watercress",
+    "type": "Leafy Green",
+    "ph_range": "6.5–7.5",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–14",
+    "growth_cycle_days": "10–20",
+    "notes": "Aquatic plant, peppery flavor, very fast-growing."
+  },
+  {
+    "plant_name": "Cress (Garden Cress)",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–10",
+    "notes": "Small, peppery leaves, grows extremely quickly."
+  },
+  {
+    "plant_name": "Wasabi",
+    "type": "Root Vegetable",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.5–2.0",
+    "light_hours": "12–14",
+    "growth_cycle_days": "180–240",
+    "notes": "Challenging to grow, requires cool conditions."
+  },
+  {
+    "plant_name": "Lovage",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–14",
+    "growth_cycle_days": "90–120",
+    "notes": "Perennial herb, celery-like flavor."
+  },
+  {
+    "plant_name": "Purslane",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–14",
+    "growth_cycle_days": "25–35",
+    "notes": "Succulent leaves, rich in omega-3."
+  },
+  {
+    "plant_name": "Mizuna",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "30–40",
+    "notes": "Mild peppery flavor, ideal for salads."
+  },
+  {
+    "plant_name": "Pak Choi (Baby Bok Choy)",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "25–35",
+    "notes": "Tender stems, fast-growing variety."
+  },
+  {
+    "plant_name": "Fenugreek",
+    "type": "Microgreen/Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–14",
+    "growth_cycle_days": "10–15",
+    "notes": "Mild, nutty flavor, fast-growing microgreen."
+  },
+  {
+    "plant_name": "Borage",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "50–60",
+    "notes": "Edible flowers and leaves, mild cucumber flavor."
+  },
+  {
+    "plant_name": "Aralia",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–14",
+    "growth_cycle_days": "60–80",
+    "notes": "Unique leaves, used in Asian cuisines."
+  },
+  {
+    "plant_name": "Shiso (Perilla)",
+    "type": "Herb",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–2.0",
+    "light_hours": "12–16",
+    "growth_cycle_days": "50–70",
+    "notes": "Japanese herb, aromatic leaves for sushi and salads."
+  },
+  {
+    "plant_name": "Chicory",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "60–80",
+    "notes": "Bitter leaves, often used in salads or cooked."
+  },
+  {
+    "plant_name": "Radicchio",
+    "type": "Leafy Green",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "60–90",
+    "notes": "Red leaves, slightly bitter, salad favorite."
+  },
+  {
+    "plant_name": "Pea Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–10",
+    "notes": "Tender, sweet shoots, very fast-growing."
+  },
+  {
+    "plant_name": "Sunflower Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–14",
+    "notes": "High protein content, fast-growing microgreen."
+  },
+  {
+    "plant_name": "Watermelon Radish",
+    "type": "Root Vegetable",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.5–2.0",
+    "light_hours": "12–16",
+    "growth_cycle_days": "50–60",
+    "notes": "Sweet, colorful radish, edible leaves."
+  },
+  {
+    "plant_name": "Kale Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "8–12",
+    "notes": "Nutrient-rich, fast-growing microgreen."
+  },
+  {
+    "plant_name": "Pak Choi Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Tender shoots, mild flavor, very fast-growing."
+  },
+  {
+    "plant_name": "Sweet Alyssum",
+    "type": "Herb/Flower",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–14",
+    "growth_cycle_days": "30–40",
+    "notes": "Edible flowers, often used for garnishes and companion planting."
+  },
+  {
+    "plant_name": "Coriander Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–14",
+    "notes": "Fast-growing, flavorful microgreen."
+  },
+  {
+    "plant_name": "Mustard Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Spicy flavor, grows very quickly."
+  },
+  {
+    "plant_name": "Beet Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–14",
+    "notes": "Nutritious, colorful microgreen."
+  },
+  {
+    "plant_name": "Chard Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Mild, tender microgreens from Swiss chard."
+  },
+  {
+    "plant_name": "Thyme Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Aromatic microgreens, ideal for seasoning dishes."
+  },
+  {
+    "plant_name": "Oregano Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Mild, flavorful microgreens."
+  },
+  {
+    "plant_name": "Eggplant Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Tender, fast-growing microgreen from eggplant seeds."
+  },
+  {
+    "plant_name": "Pepper Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Mild or hot microgreens depending on pepper variety."
+  },
+  {
+    "plant_name": "Melon Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–6.5",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Tender shoots with a mild, sweet flavor."
+  },
+  {
+    "plant_name": "Sorrel Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Tangy flavor, fast-growing microgreen."
+  },
+  {
+    "plant_name": "Swiss Chard Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Colorful stems, tender leaves, rich in nutrients."
+  },
+  {
+    "plant_name": "Endive Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Slightly bitter flavor, ideal for salads."
+  },
+  {
+    "plant_name": "Radicchio Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Red leaves, slightly bitter, adds color and flavor."
+  },
+  {
+    "plant_name": "Mâche Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Tender leaves, mild flavor, grows well in cooler conditions."
+  },
+  {
+    "plant_name": "Amaranth Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Bright-colored leaves, nutrient-rich microgreen."
+  },
+  {
+    "plant_name": "Oca Microgreens",
+    "type": "Microgreen",
+    "ph_range": "5.5–6.5",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–14",
+    "growth_cycle_days": "10–15",
+    "notes": "Colorful shoots, mild flavor, quick-growing."
+  },
+  {
+    "plant_name": "Kohlrabi Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Edible stem and leaves, mild flavor."
+  },
+  {
+    "plant_name": "Bok Choy Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Tender shoots, fast-growing and mild."
+  },
+  {
+    "plant_name": "Mizuna Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Mild peppery flavor, perfect for salads."
+  },
+  {
+    "plant_name": "Sage Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Aromatic microgreens, fast-growing, flavorful."
+  },
+  {
+    "plant_name": "Lovage Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Celery-like flavor, nutrient-rich microgreen."
+  },
+  {
+    "plant_name": "Lavender Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "12–16",
+    "notes": "Fragrant, delicate flavor for garnishes."
+  },
+  {
+    "plant_name": "Marjoram Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Mild herb flavor, fast-growing microgreen."
+  },
+  {
+    "plant_name": "Borage Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Cucumber-flavored shoots, edible flowers."
+  },
+  {
+    "plant_name": "Shiso Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.2–1.8",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Japanese aromatic microgreen, tender leaves."
+  },
+  {
+    "plant_name": "Chervil Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "10–14",
+    "notes": "Delicate anise-flavored leaves, quick-growing."
+  },
+  {
+    "plant_name": "Cress Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–10",
+    "notes": "Peppery, fast-growing microgreen for salads."
+  },
+  {
+    "plant_name": "Purslane Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Succulent leaves, high in omega-3, fast-growing."
+  },
+  {
+    "plant_name": "Fenugreek Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–14",
+    "growth_cycle_days": "10–15",
+    "notes": "Mild, nutty flavor, fast-growing shoots."
+  },
+  {
+    "plant_name": "Radish Sprouts",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "5–10",
+    "notes": "Fast-growing, spicy flavor microgreen."
+  },
+  {
+    "plant_name": "Alfalfa Sprouts",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "5–10",
+    "notes": "Mild flavor, nutrient-dense, fast-growing."
+  },
+  {
+    "plant_name": "Cabbage Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Mild flavor, colorful shoots."
+  },
+  {
+    "plant_name": "Kale Sprouts",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Nutrient-rich, quick-growing microgreen."
+  },
+  {
+    "plant_name": "Basil Sprouts",
+    "type": "Microgreen",
+    "ph_range": "5.5–6.5",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Aromatic, tender microgreens."
+  },
+  {
+    "plant_name": "Spinach Microgreens",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Tender leaves, nutrient-rich, fast-growing."
+  },
+  {
+    "plant_name": "Lettuce Sprouts",
+    "type": "Microgreen",
+    "ph_range": "5.5–6.5",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Mild flavor, fast-growing, ideal for salads."
+  },
+  {
+    "plant_name": "Mustard Sprouts",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–10",
+    "notes": "Spicy flavor, quick-growing microgreen."
+  },
+  {
+    "plant_name": "Turnip Sprouts",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Mild, tender leaves, fast-growing."
+  },
+  {
+    "plant_name": "Beet Sprouts",
+    "type": "Microgreen",
+    "ph_range": "6.0–7.0",
+    "ec_range": "1.0–1.5",
+    "light_hours": "12–16",
+    "growth_cycle_days": "7–12",
+    "notes": "Colorful stems, tender leaves, nutrient-rich."
+  }
+
+
+]
+ 
