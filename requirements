@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+motor 
+aioredis
+databases
+python-dotenv
+itsdangerous
+pydantic-settings
