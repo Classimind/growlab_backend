@@ -1,4 +1,4 @@
-fastapi
+fastapi[all]
 uvicorn
 python-multipart
 pydantic
@@ -8,3 +8,6 @@ databases
 python-dotenv
 itsdangerous
 pydantic-settings
+httpx
+pytest
+pytest-asyncio
