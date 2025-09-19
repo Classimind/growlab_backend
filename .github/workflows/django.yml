@@ -10,9 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      # Checkout code (optional, mainly for tests)
       - name: Checkout code
         uses: actions/checkout@v3
-      # (Optional) Run tests before deploying
+
+      # Run tests
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -30,5 +32,9 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
+            # Navigate to your app directory
             cd ~/app
+            # Optional: ensure git uses the correct GitHub deploy key
+            export GIT_SSH_COMMAND='ssh -i ~/.ssh/github_actions_key -o StrictHostKeyChecking=no'
+            # Run deploy script
             ./deploy.sh
