@@ -21,7 +21,7 @@ async def get_plants():
     if cached:
         # Deserialize JSON to list of Plant objects
         plants_data = json.loads(cached)
-        return [Plant(**p) for p in plants_data]
+        return  [Plant(**json.loads(p)) for p in plants_data]
 
     
     plants_cursor = mongodb.db["plants"].find({})
