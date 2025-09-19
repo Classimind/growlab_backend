@@ -24,9 +24,7 @@ class Settings(BaseSettings):
 
     DEBUG: bool = True
 
-    def __init__(self, **values):
-        super().__init__(**values)
-
+    def model_post_init(self, __context=None):
         # Construct Mongo URI
         self.MONGO_URI = f"mongodb://{self.MONGO_USER}:{self.MONGO_PASSWORD}@{self.MONGO_HOST}:{self.MONGO_PORT}/"
 
