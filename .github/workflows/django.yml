@@ -8,8 +8,13 @@ on:
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
+    
 
     steps:
+      - name: Debug SSH inputs
+        run: |
+          echo "Host: ${{ secrets.HOST }}"
+          echo "User: ${{ secrets.USER }}"
       - name: Checkout code
         uses: actions/checkout@v3
 
