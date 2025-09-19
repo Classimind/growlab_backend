@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  backend:
+    image: growlab
+    build: .
+    ports:
+      - "8989:8989"
+    volumes:
+      - .:/growlab
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8989 --reload
+       
