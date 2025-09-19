@@ -14,7 +14,6 @@ jobs:
       MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
       MONGO_HOST: ${{ secrets.MONGO_HOST }}
       MONGO_PORT: ${{ secrets.MONGO_PORT }}
-      ALLOWED_ORIGINS: ${{secrets.ALLOWED_ORIGINS}}
     
     steps:
       - name: Checkout code
