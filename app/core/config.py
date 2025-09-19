@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 from typing import List
+import os
 
 class Settings(BaseSettings):
     # MongoDB configuration
@@ -16,21 +17,26 @@ class Settings(BaseSettings):
     REDIS_CACHE_EXPIRE: int = 300  # cache expiry in seconds
 
     # CORS settings
-    ALLOWED_ORIGINS: List[str] 
+    ALLOWED_ORIGINS: List[str] = []
 
     # Security / session
-    SECRET_KEY: str = "supersecretkey"  # for session middleware, JWT, etc.
+    SECRET_KEY: str = "supersecretkey"
 
-    DEBUG: bool = True  # toggle debug mode
+    DEBUG: bool = True
 
-    # Automatically construct Mongo URI after init
     def __init__(self, **values):
         super().__init__(**values)
+
+        # Construct Mongo URI
         self.MONGO_URI = f"mongodb://{self.MONGO_USER}:{self.MONGO_PASSWORD}@{self.MONGO_HOST}:{self.MONGO_PORT}/"
 
-    class Config:
-        env_file = ".env"  # automatically load .env
-        env_file_encoding = "utf-8"
+        # Parse ALLOWED_ORIGINS from env if it's a string
+        origins = os.getenv("ALLOWED_ORIGINS")
+        if origins and isinstance(origins, str):
+            self.ALLOWED_ORIGINS = [origin.strip() for origin in origins.split(",")]
 
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
 
 settings = Settings()
