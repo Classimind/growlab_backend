@@ -13,8 +13,8 @@ jobs:
     steps:
       - name: Debug SSH inputs
         run: |
-          echo "Host: ${{ secrets.HOST }}"
-          echo "User: ${{ secrets.USER }}"
+          echo "Host: ${{ secrets.VPS_HOST }}"
+          echo "User: ${{ secrets.VPS_USER }}"
       - name: Checkout code
         uses: actions/checkout@v3
 
