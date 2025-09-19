@@ -23,6 +23,6 @@ echo "Starting Docker Compose services..."
 docker-compose -f $COMPOSE_FILE up -d --build
 
 # Clean up unused images
-docker-compose down --rmi local
+# docker-compose down --rmi local
 
 echo "Deployment completed!"
