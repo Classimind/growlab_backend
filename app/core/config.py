@@ -16,7 +16,7 @@ class Settings(BaseSettings):
 
 
     # Redis configuration
-    REDIS_URI: str = "redis://localhost:6379"
+    REDIS_URI: str = "redis://host.docker.internal:6379"
     REDIS_CACHE_EXPIRE: int = 300
 
     # CORS settings
