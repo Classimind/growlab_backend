@@ -12,7 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       # (Optional) Run tests before deploying
       - name: Set up Python
         uses: actions/setup-python@v4
