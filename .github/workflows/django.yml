@@ -31,5 +31,5 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /home/youruser/app
+            cd /home/ai/app
             ./deploy.sh
