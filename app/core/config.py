@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     REDIS_CACHE_EXPIRE: int = 300  # cache expiry in seconds
 
     # CORS settings
-    ALLOWED_ORIGINS: List[str] = []
+    ALLOWED_ORIGINS: List[str] = ['*']
 
     # Security / session
     SECRET_KEY: str = "supersecretkey"
@@ -30,10 +30,10 @@ class Settings(BaseSettings):
         # Construct Mongo URI
         self.MONGO_URI = f"mongodb://{self.MONGO_USER}:{self.MONGO_PASSWORD}@{self.MONGO_HOST}:{self.MONGO_PORT}/"
 
-        # Parse ALLOWED_ORIGINS from env if it's a string
-        origins = os.getenv("ALLOWED_ORIGINS")
-        if origins and isinstance(origins, str):
-            self.ALLOWED_ORIGINS = [origin.strip() for origin in origins.split(",")]
+        # # Parse ALLOWED_ORIGINS from env if it's a string
+        # origins = os.getenv("ALLOWED_ORIGINS")
+        # if origins and isinstance(origins, str):
+        #     self.ALLOWED_ORIGINS = [origin.strip() for origin in origins.split(",")]
 
     class Config:
         env_file = ".env"
