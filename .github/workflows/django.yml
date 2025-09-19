@@ -8,9 +8,15 @@ on:
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
+    env:
+      MONGO_USER: ${{ secrets.MONGO_USER }}
+      MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+      MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
+      MONGO_HOST: ${{ secrets.MONGO_HOST }}
+      MONGO_PORT: ${{ secrets.MONGO_PORT }}
+      ALLOWED_ORIGINS: ${{secrets.ALLOWED_ORIGINS}}
     
     steps:
-      # Checkout code (optional, mainly for tests)
       - name: Checkout code
         uses: actions/checkout@v3
 
