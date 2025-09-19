@@ -4,6 +4,8 @@ services:
   backend:
     image: growlab
     build: .
+    env_file:
+      - .env
     ports:
       - "8989:8989"
     volumes:
