@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e  # exit on error
 
-APP_DIR='/home/ai/growlab'
-COMPOSE_FILE='docker-compose.yml'
+APP_DIR="$HOME/growlab"
+COMPOSE_FILE='docker-compose.yaml'
 REPO_URL='git@github.com:Classimind/growlab_backend.git'  
 
 # Create app directory if missing
