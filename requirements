@@ -11,3 +11,4 @@ pydantic-settings
 httpx
 pytest
 pytest-asyncio
+paho-mqtt

@@ -1,5 +1,5 @@
 import motor.motor_asyncio
-from app.core.config import settings
+from core.config import settings
 
 class MongoDB:
     client: motor.motor_asyncio.AsyncIOMotorClient = None
