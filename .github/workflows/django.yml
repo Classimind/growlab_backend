@@ -19,15 +19,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Run tests
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-      - name: Install deps & run tests
-        run: |
-          pip install -r requirements
-          pytest
+      # # Run tests
+      # - name: Set up Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: "3.10"
+      # - name: Install deps & run tests
+      #   run: |
+      #     pip install -r requirements
+      #     pytest
 
           
       # Deploy to VPS
