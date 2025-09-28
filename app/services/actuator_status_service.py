@@ -1,5 +1,5 @@
-from db.clients import mongodb
-from models.actuator_status_history import ActuatorStatusHistory
+from app.db.clients import mongodb
+from app.models.actuator_status_history import ActuatorStatusHistory
 
 
 COLLECTION_NAME="actuator_states"

@@ -8,7 +8,7 @@ class ActuatorState(str,Enum):
     ERROR = "error"
 
 class ActuatorStatusHistory(BaseModel):
-    actuator_name:str=Field(...,min_length=3,max_length=50,description="Name of the actuator")
-    farm_name:str = Field(...,min=1,max=25,description="Farm name")
+    actuator_name:str
+    farm_name:str
     modified:datetime= Field(default_factory=datetime.now,description="Timestamp when status was modified")
-    status:ActuatorState= Field(...,description="Current state of the actuator")
+    status:ActuatorState

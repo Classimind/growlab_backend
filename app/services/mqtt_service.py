@@ -21,7 +21,7 @@ class MqttService:
         
     async def start(self,loop):
          # lazy initalize 
-         from services.actuator_status_service import ActuatorStatusService
+         from app.services.actuator_status_service import ActuatorStatusService
          """Start the MQTT client loop"""
          self.loop = loop
          # init the actuator status service
@@ -42,7 +42,7 @@ class MqttService:
         client.subscribe("actuators/+/+/status")
     
     def on_message(self,client,userdata,msg):
-        from services.ws_connection_manager import manager
+        from app.services.ws_connection_manager import manager
         payload = msg.payload.decode('utf-8').lower()
         async def handle_message():
             try:

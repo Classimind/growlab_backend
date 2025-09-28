@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-from models.plant import Plant
-from db.clients import mongodb
-from services.cache import get_cache,set_cache
+from app.models.plant import Plant
+from app.db.clients import mongodb
+from app.services.cache import get_cache,set_cache
 import json
 
 router = APIRouter()

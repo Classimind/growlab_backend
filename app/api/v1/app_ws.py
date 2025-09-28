@@ -1,6 +1,6 @@
 from fastapi import APIRouter,WebSocket
-from services.actuator_status_service import ActuatorStatusService
-from services.ws_connection_manager import manager
+from app.services.actuator_status_service import ActuatorStatusService
+from app.services.ws_connection_manager import manager
 router = APIRouter()
 
 #-------------------------------------------------------------

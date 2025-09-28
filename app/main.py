@@ -2,12 +2,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
-from core.config import settings
+from app.core.config import settings
 from contextlib import asynccontextmanager
-from db.clients import connect_db,close_db
-from services.cache import connect_redis,close_redis
-from api.v1 import plant_database,actuator_states,app_ws
-from services.mqtt_service import mqtt_service
+from app.db.clients import connect_db,close_db
+from app.services.cache import connect_redis,close_redis
+from app.api.v1 import plant_database,actuator_states,app_ws
+from app.services.mqtt_service import mqtt_service
 import asyncio
 
 

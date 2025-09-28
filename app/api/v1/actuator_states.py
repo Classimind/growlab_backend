@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from services.actuator_status_service import ActuatorStatusService
+from app.services.actuator_status_service import ActuatorStatusService
 router = APIRouter()
 
 
