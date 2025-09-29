@@ -1,5 +1,9 @@
 import paho.mqtt.client as mqtt
 import asyncio
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 class MqttService:
     
@@ -69,4 +73,4 @@ class MqttService:
             print("Main loop not set. Messagge not processed")
 
 
-mqtt_service = MqttService("hydroponics","hydroponics","mqtt.safalstha.com.np")
+mqtt_service = MqttService("hydroponics","hydroponics",os.getenv("BROKER_URL"))

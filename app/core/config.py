@@ -9,14 +9,14 @@ class Settings(BaseSettings):
     MONGO_PASSWORD: str
     MONGO_DB_NAME: str
     MONGO_HOST: str
-    MONGO_PORT: int 
+    MONGO_PORT: int
+    BROKER_URL:str 
 
-    
     MONGO_URI: str = Field(default="", init=False)
 
 
     # Redis configuration
-    REDIS_URI: str = "redis://localhost:6379"
+    REDIS_URI: str 
     REDIS_CACHE_EXPIRE: int = 300
 
     # CORS settings
