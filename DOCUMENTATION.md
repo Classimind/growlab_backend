@@ -158,3 +158,343 @@ Content-Type: application/json
 ---
 
 **Note:** All responses are returned as JSON. Redis caching is used internally to speed up retrieval.
+
+
+# User Module Documentation
+
+This module provides models and API endpoints for user authentication and management, including email/password signup and login, as well as OAuth login via external providers.
+
+---
+
+## Enums
+
+### Provider
+
+Authentication providers:
+
+* `EMAIL`: Email/password authentication
+* `GOOGLE`: Google OAuth
+* `FACEBOOK`: Facebook OAuth
+* `GITHUB`: GitHub OAuth
+
+### Role
+
+User roles:
+
+* `growlab:superadmin`: Company super administrator
+* `growlab:employee`: Company employee
+* `farm:admin`: Farm administrator
+* `farm:employee`: Farm employee
+* `user`: Normal user
+
+---
+
+## Models
+
+### OAuthUser
+
+Represents OAuth provider user details.
+
+**Fields**
+
+* `provider`: OAuth provider (Provider enum)
+* `provider_user_id`: Unique ID from the OAuth provider
+* `email`: Optional user email from provider
+* `name`: Optional full name
+* `avatar_url`: Optional avatar URL
+* `access_token`: OAuth access token
+* `refresh_token`: Optional OAuth refresh token
+
+**Example**
+
+```json
+{
+  "provider": "google",
+  "provider_user_id": "12345",
+  "email": "user@example.com",
+  "name": "John Doe",
+  "avatar_url": "http://avatar.url",
+  "access_token": "ya29.a0AfH6SMB...",
+  "refresh_token": "1//0gR..."
+}
+```
+
+---
+
+### User
+
+Represents a system user.
+
+**Fields**
+
+* `email`: User email (required if provider is EMAIL)
+* `password`: User password (required if provider is EMAIL)
+* `provider`: Authentication provider
+* `oauth`: OAuth details (required if provider is not EMAIL)
+* `created_at`: Account creation timestamp (defaults to UTC now)
+* `role`: User role (default `user`)
+* `domain_ids`: Mapping of domain IDs to roles
+
+**Validators**
+
+* `validate_email_password`: Ensures email and password are provided if provider is EMAIL
+* `validate_oauth`: Ensures OAuth details are provided if provider is not EMAIL
+
+**Example (Email User)**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "securepassword",
+  "provider": "EMAIL",
+  "role": "user",
+  "domain_ids": {
+    "farm123": "farm:admin"
+  }
+}
+```
+
+**Example (OAuth User)**
+
+```json
+{
+  "provider": "google",
+  "oauth": {
+    "provider": "google",
+    "provider_user_id": "12345",
+    "email": "user@example.com",
+    "name": "John Doe",
+    "avatar_url": "http://avatar.url",
+    "access_token": "ya29.a0AfH6SMB..."
+  },
+  "role": "user",
+  "domain_ids": {}
+}
+```
+
+---
+
+### EmailSignup
+
+Model for email signup request.
+
+**Example**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "securepassword"
+}
+```
+
+---
+
+### Email Login
+
+Model for email login request.
+
+**Example**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "securepassword"
+}
+```
+
+---
+
+### OAuthLogin
+
+Model for OAuth login request.
+
+**Example**
+
+```json
+{
+  "provider": "google",
+  "provider_user_id": "12345",
+  "access_token": "ya29.a0AfH6SMB...",
+  "email": "user@example.com",
+  "name": "John Doe",
+  "avatar_url": "http://avatar.url"
+}
+```
+
+---
+
+### Token
+
+Represents access and refresh tokens.
+
+**Fields**
+
+* `access_token`: Access token string
+* `refresh_token`: Refresh token string
+* `token_type`: Token type, default "bearer"
+
+**Example**
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "bearer"
+}
+```
+
+---
+
+## API Endpoints
+
+### POST /refresh
+
+Refresh an access token using a refresh token.
+
+**Request**
+
+```json
+{
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+**Response**
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+**Errors**
+
+* 401 Unauthorized: Invalid refresh token
+
+---
+
+### POST /signup
+
+Register a new user using email/password.
+
+**Request**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "securepassword"
+}
+```
+
+**Response**
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+**Errors**
+
+* 400 Bad Request: Email already registered or missing fields
+* 500 Internal Server Error: Database error
+
+---
+
+### POST /login
+
+Authenticate an existing user using email/password.
+
+**Request**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "securepassword"
+}
+```
+
+**Response**
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+**Errors**
+
+* 401 Unauthorized: Invalid credentials
+
+---
+
+### POST /oauth-login
+
+Authenticate or register a user using OAuth.
+
+**Request**
+
+```json
+{
+  "provider": "google",
+  "provider_user_id": "12345",
+  "access_token": "ya29.a0AfH6SMB...",
+  "email": "user@example.com",
+  "name": "John Doe",
+  "avatar_url": "http://avatar.url"
+}
+```
+
+**Response**
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+**Notes**
+
+* Creates a new user if not already registered
+* Uses provider + provider_user_id for authentication
+
+
+## Actuator WebSocket Usage Guide
+
+This guide explains how to use the WebSocket endpoint to monitor actuator states in real-time.
+
+---
+
+## Endpoint
+
+`ws://<server_address>/actuators/{farm_name}/{actuator_name}`
+
+**Path Parameters:**
+- `farm_name` – Name of the farm.
+- `actuator_name` – Name of the actuator.
+
+**Example URL:**
+
+`ws://localhost:8000/actuators/farm1/pump1`
+
+---
+
+## Connecting
+
+1. Open a WebSocket connection to the endpoint with the correct `farm_name` and `actuator_name`.
+2. The server registers the connection and sends the last known actuator status.
+
+---
+
+## Initial Data
+
+Upon connecting, the server sends the last known actuator status:
+
+```json
+{
+  "type": "init",
+  "status": "<current_status>"
+}
