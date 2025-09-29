@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     MONGO_HOST: str
     MONGO_PORT: int
     BROKER_URL:str 
+    TOKEN_SECRET_KEY:str
 
     MONGO_URI: str = Field(default="", init=False)
 

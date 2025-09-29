@@ -41,7 +41,7 @@ class MqttService:
         print("MQTT stopped")
 
     def on_connect(self,client,userdata,flags,rc):
-        print(f"Conneccted with result code {rc}")
+        print(f"Connected with result code {rc}")
         #subscribe to all actuators
         client.subscribe("actuators/+/+/status")
     

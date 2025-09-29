@@ -12,3 +12,5 @@ httpx
 pytest
 pytest-asyncio
 paho-mqtt
+python-jose[cryptography]
+passlib[argon2] 
