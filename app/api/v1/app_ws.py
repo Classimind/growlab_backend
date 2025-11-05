@@ -1,7 +1,10 @@
 from fastapi import APIRouter,WebSocket
 from app.services.actuator_status_service import ActuatorStatusService
+from app.services.ws_connection_manager_sensor import sensormanager
+from app.services.sensor_service import CollectSensorValueService
 from app.services.ws_connection_manager import manager
 router = APIRouter()
+
 
 #-------------------------------------------------------------
 # ws for the realtime montitoring of the state of the actuators
@@ -23,5 +26,19 @@ async def websocket_endpoint(websocket:WebSocket,farm_name:str,actuator_name:str
         print(f"Error: {e}")
     finally:
         manager.disconnect(farm_name,actuator_name,websocket)
+
+
+@router.websocket("/sensors/live/{farm_id}/{sensor_name}")
+async def websocket_sensor(websocket: WebSocket, farm_id: str, sensor_name: str):
+    await sensormanager.connect(farm_id, sensor_name, websocket)
+    try:
+        # Keep connection alive
+        while True:
+            await websocket.receive_text()  # just to keep connection open
+
+    except Exception as e:
+        print(f"Error in websocket: {e}")
+    finally:
+        manager.disconnect(farm_id, sensor_name, websocket)
 
 

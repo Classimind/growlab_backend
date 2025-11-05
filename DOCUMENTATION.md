@@ -498,3 +498,138 @@ Upon connecting, the server sends the last known actuator status:
   "type": "init",
   "status": "<current_status>"
 }
+
+
+
+
+# Sensor API Documentation
+
+This API allows developers to **collect, retrieve, and stream sensor data** from farms. It supports REST endpoints for historical data and WebSocket for real-time updates.
+
+---
+
+## Base URL
+
+All endpoints are prefixed with the API router, e.g. `/sensors`.
+
+---
+
+## Models
+
+### Sensor
+
+```json
+{
+  "sensor_name": "temperature",
+  "farm_id": "farm1",
+  "value": 25.5,
+  "unit": "C",
+  "sensor_type": "analog",
+  "created": "2025-11-05T16:08:24.233474+00:00"
+}
+```
+
+* `sensor_name` (string): Name of the sensor.
+* `farm_id` (string): Farm identifier.
+* `value` (float): Sensor reading.
+* `unit` (string, optional): Unit of measurement.
+* `sensor_type` (string, optional): Type of sensor.
+* `created` (datetime, optional): Timestamp of the reading. Defaults to current UTC time.
+
+---
+
+## REST API Endpoints
+
+### 1. Add a Single Sensor Reading
+
+**POST** `/sensors/collect`
+**Request Body:** `Sensor` JSON
+**Response:** Saved `Sensor` object
+
+**Behavior:** Saves the sensor reading and broadcasts to connected WebSocket clients.
+
+---
+
+### 2. Add Multiple Sensor Readings (Batch)
+
+**POST** `/sensors/collect/batch`
+**Request Body:** List of `Sensor` objects
+**Response:** List of saved sensors
+
+**Behavior:** Saves multiple readings. WebSocket broadcast not included by default.
+
+---
+
+### 3. Get All Sensor Readings
+
+**GET** `/sensors/`
+**Response:** List of `Sensor` objects
+
+---
+
+### 4. Get Sensors by Farm
+
+**GET** `/sensors/farm/{farm_id}`
+**Path Parameter:** `farm_id`
+**Response:** List of `Sensor` objects for the specified farm.
+
+---
+
+### 5. Get Sensors by Date Range
+
+**GET** `/sensors/range/`
+**Query Parameters:** `start` (ISO datetime), `end` (ISO datetime)
+**Response:** List of `Sensor` objects within the date range.
+
+---
+
+### 6. Get Sensors by Farm and Date Range
+
+**GET** `/sensors/farm/{farm_id}/range/`
+**Path Parameter:** `farm_id`
+**Query Parameters:** `start`, `end` (ISO datetime)
+**Response:** List of `Sensor` objects filtered by farm and date range.
+
+---
+
+### 7. Get Sensors by Farm and Sensor Name
+
+**GET** `/sensors/farm/{farm_id}/sensor/{sensor_name}`
+**Path Parameters:**
+
+* `farm_id`
+* `sensor_name`
+
+**Response:** List of `Sensor` objects for the specific sensor on the specified farm.
+
+---
+
+## WebSocket Endpoint
+
+### Live Updates
+
+**WS** `/sensors/live/{farm_id}/{sensor_name}`
+
+**Behavior:**
+
+* Client subscribes to a specific sensor on a farm.
+* Sends new sensor readings in real-time as they are inserted.
+* Optional: fetch last reading on connect.
+
+**Message format:**
+
+```json
+{
+  "type": "update",
+  "data": {
+    "sensor_name": "temperature",
+    "farm_id": "farm1",
+    "value": 26.1,
+    "unit": "C",
+    "sensor_type": "analog",
+    "created": "2025-11-05T16:08:24.233474+00:00"
+  }
+}
+```
+
+

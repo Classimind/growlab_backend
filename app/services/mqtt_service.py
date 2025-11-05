@@ -2,8 +2,11 @@ import paho.mqtt.client as mqtt
 import asyncio
 from dotenv import load_dotenv
 import os
+import logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 class MqttService:
     
@@ -38,10 +41,10 @@ class MqttService:
     def stop(self):
         self.client.loop_stop()
         self.client.disconnect()
-        print("MQTT stopped")
+        logger.info("MQTT stopped")
 
     def on_connect(self,client,userdata,flags,rc):
-        print(f"Connected with result code {rc}")
+        logger.info(f"Connected with result code {rc}")
         #subscribe to all actuators
         client.subscribe("actuators/+/+/status")
     
@@ -52,7 +55,7 @@ class MqttService:
             try:
                 actuator_name = msg.topic.split("/")[2] 
                 farm_name = msg.topic.split("/")[1]
-                print(f"Received status for {actuator_name}:{payload}")
+                logger.info(f"Received status for {actuator_name}:{payload}")
 
                 await self.service.create_status({
                     "actuator_name": actuator_name,
@@ -65,12 +68,12 @@ class MqttService:
                     "status": payload
                 })
             except Exception as e:
-                print(f"Error handling MQTT message:{e}")
+                logger.exception(f"Error handling MQTT message:{e}")
         
         if self.loop:
             asyncio.run_coroutine_threadsafe(handle_message(), self.loop)
         else: 
-            print("Main loop not set. Messagge not processed")
+            logger.warning("Main loop not set. Messagge not processed")
 
 
 mqtt_service = MqttService("hydroponics","hydroponics",os.getenv("BROKER_URL"))

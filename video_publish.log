@@ -180,3 +180,415 @@ INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0
 INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://localhost:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
 INFO:__main__:Connected to room room1
 INFO:__main__:Publishing webcam video...
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-1' coro=<main() done, defined at D:\Hydroponics\server\publisher.py:17> exception=ValueError('api_key and api_secret must be set')>
+Traceback (most recent call last):
+  File "D:\Hydroponics\server\publisher.py", line 20, in main
+    api.AccessToken(os.getenv("LIVEKIT_API_KEY"), os.getenv("LIVEKIT_API_SECRET"))
+  File "D:\Hydroponics\server\hydroenv\lib\site-packages\livekit\api\access_token.py", line 124, in __init__
+    raise ValueError("api_key and api_secret must be set")
+ValueError: api_key and api_secret must be set
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-1' coro=<main() done, defined at D:\Hydroponics\server\publisher.py:17> exception=ValueError('api_key and api_secret must be set')>
+Traceback (most recent call last):
+  File "D:\Hydroponics\server\publisher.py", line 20, in main
+    api.AccessToken(os.getenv("LIVEKIT_API_KEY"), os.getenv("LIVEKIT_API_SECRET"))
+  File "D:\Hydroponics\server\hydroenv\lib\site-packages\livekit\api\access_token.py", line 124, in __init__
+    raise ValueError("api_key and api_secret must be set")
+ValueError: api_key and api_secret must be set
+INFO:__main__:Connecting to ws://localhost:7880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://localhost:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connected to room test
+INFO:__main__:Publishing webcam video...
+INFO:livekit:livekit::room:1375:livekit::room - disconnected from room with reason: ClientInitiated
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-1' coro=<main() done, defined at D:\Hydroponics\server\publisher.py:17> exception=KeyboardInterrupt()>
+Traceback (most recent call last):
+  File "D:\Hydroponics\server\publisher.py", line 99, in <module>
+    loop.run_forever()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 316, in run_forever
+    super().run_forever()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 595, in run_forever
+    self._run_once()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1881, in _run_once
+    handle._run()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "D:\Hydroponics\server\publisher.py", line 74, in main
+    await _stream()
+  File "D:\Hydroponics\server\publisher.py", line 62, in _stream
+    ret, frame = cap.read()
+KeyboardInterrupt
+INFO:__main__:Connecting to ws://localhost:7880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://localhost:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connected to room test
+INFO:__main__:Publishing webcam video...
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-1' coro=<main() running at D:\Hydroponics\server\publisher.py:74> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+INFO:__main__:Connecting to ws://localhost:7880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://localhost:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connected to room test
+INFO:__main__:Publishing webcam video...
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-1' coro=<main() running at D:\Hydroponics\server\publisher.py:74> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+INFO:__main__:Connecting to ws://localhost:7880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://localhost:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connected to room test
+INFO:__main__:Publishing webcam video...
+INFO:livekit:livekit::room:1375:livekit::room - disconnected from room with reason: ClientInitiated
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-1' coro=<main() done, defined at D:\Hydroponics\server\publisher.py:17> exception=KeyboardInterrupt()>
+Traceback (most recent call last):
+  File "D:\Hydroponics\server\publisher.py", line 99, in <module>
+    loop.run_forever()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 316, in run_forever
+    super().run_forever()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 595, in run_forever
+    self._run_once()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1881, in _run_once
+    handle._run()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "D:\Hydroponics\server\publisher.py", line 74, in main
+    await _stream()
+  File "D:\Hydroponics\server\publisher.py", line 62, in _stream
+    ret, frame = cap.read()
+KeyboardInterrupt
+INFO:__main__:Connecting to ws://localhost:7880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://localhost:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connected to room test
+INFO:__main__:Publishing webcam video...
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-1' coro=<main() running at D:\Hydroponics\server\publisher.py:74> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+INFO:__main__:Connecting to ws://192.168.1.65:7880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://192.168.1.65:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://192.168.1.65:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://192.168.1.65:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://192.168.1.65:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to ws://192.168.1.65:7880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://192.168.1.65:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connected to room test
+INFO:__main__:Publishing webcam video...
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-1' coro=<main() done, defined at D:\Hydroponics\server\publisher.py:17> exception=KeyboardInterrupt()>
+Traceback (most recent call last):
+  File "D:\Hydroponics\server\publisher.py", line 99, in <module>
+    loop.run_forever()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 316, in run_forever
+    super().run_forever()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 595, in run_forever
+    self._run_once()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1881, in _run_once
+    handle._run()
+  File "C:\Users\compu\AppData\Local\Programs\Python\Python310\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "D:\Hydroponics\server\publisher.py", line 74, in main
+    await _stream()
+  File "D:\Hydroponics\server\publisher.py", line 62, in _stream
+    ret, frame = cap.read()
+KeyboardInterrupt
+INFO:__main__:Connecting to ws://livekit.safalstha.com.np:7881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 11001, kind: Uncategorized, message: "No such host is known." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 11001, kind: Uncategorized, message: "No such host is known." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 11001, kind: Uncategorized, message: "No such host is known." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No such host is known. (os error 11001)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No such host is known. (os error 11001)
+INFO:__main__:Connecting to ws://livekit.safalstha.com.np:7881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to ws://172.18.123.7:7880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://172.18.123.7:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connected to room test
+INFO:__main__:Publishing webcam video...
+INFO:livekit:livekit::room:1375:livekit::room - disconnected from room with reason: ClientInitiated
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-1' coro=<main() running at D:\Hydroponics\server\publisher.py:74> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+INFO:__main__:Connecting to ws://172.18.123.7:7880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://172.18.123.7:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connected to room test
+INFO:__main__:Publishing webcam video...
+INFO:livekit:livekit::room:1375:livekit::room - disconnected from room with reason: ClientInitiated
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-1' coro=<main() running at D:\Hydroponics\server\publisher.py:74> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+INFO:__main__:Connecting to ws://172.18.123.7:7880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://172.18.123.7:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connected to room test
+INFO:__main__:Publishing webcam video...
+INFO:__main__:Connecting to ws://livekit.safalstha.com.np:7881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to ws://livekit.safalstha.com.np:7881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to ws://livekit.safalstha.com.np:7880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connecting to ws://livekit.safalstha.com.np:9880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to ws://livekit.safalstha.com.np:9881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to wss://livekit.safalstha.com.np:9881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to wss://livekit.safalstha.com.np:9881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to ws://livekit.safalstha.com.np:9880
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:9880/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to wss://livekit.safalstha.com.np:9881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to wss://livekit.safalstha.com.np:9881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to wss://livekit.safalstha.com.np:9881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to wss://livekit.safalstha.com.np:9881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connecting to wss://livekit.safalstha.com.np:9881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connecting to wss://livekit-turn.safalstha.com.np:9881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit-turn.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit-turn.safalstha.com.np:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connecting to ws://livekit.safalstha.com.np:7881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to ws://202.166.219.106:7881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://202.166.219.106:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://202.166.219.106:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://202.166.219.106:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://202.166.219.106:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to wss://202.166.219.106:9881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://202.166.219.106:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://202.166.219.106:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://202.166.219.106:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://202.166.219.106:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: ws failure: IO error: No connection could be made because the target machine actively refused it. (os error 10061)
+INFO:__main__:Connecting to wss://202.166.219.106:9881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://202.166.219.106:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://202.166.219.106:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://202.166.219.106:9881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connecting to ws://202.166.219.106:7881
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://202.166.219.106:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://202.166.219.106:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(WsError(Io(Os { code: 10061, kind: ConnectionRefused, message: "No connection could be made because the target machine actively refused it." }))), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://202.166.219.106:7881/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+INFO:__main__:Connecting to https://livekit.safalstha.com.np/
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(Server(502, "error code: 502")), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(Server(502, "error code: 502")), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(Server(502, "error code: 502")), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: server error: 502 Bad Gateway - error code: 502
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: server error: 502 Bad Gateway - error code: 502
+INFO:__main__:Connecting to ws://livekit.safalstha.com.np/
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(Server(502, "error code: 502")), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(Server(502, "error code: 502")), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(Server(502, "error code: 502")), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to ws://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: server error: 502 Bad Gateway - error code: 502
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: server error: 502 Bad Gateway - error code: 502
+INFO:__main__:Connecting to https://livekit.safalstha.com.np/
+INFO:livekit:livekit_ffi::server:139:livekit_ffi::server - initializing ffi server v0.12.33
+INFO:livekit:livekit_ffi::cabi:36:livekit_ffi::cabi - initializing ffi server v0.12.33
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(Server(502, "error code: 502")), retrying... (1/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(Server(502, "error code: 502")), retrying... (2/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+WARNING:livekit:livekit::rtc_engine:395:livekit::rtc_engine - failed to connect: Signal(Server(502, "error code: 502")), retrying... (3/3)
+INFO:livekit:livekit_api::signal_client::signal_stream:106:livekit_api::signal_client::signal_stream - connecting to wss://livekit.safalstha.com.np/rtc?sdk=python&protocol=16&auto_subscribe=1&adaptive_stream=0&version=1.0.13&access_token=...
+ERROR:__main__:Failed to connect: engine: signal failure: server error: 502 Bad Gateway - error code: 502
+ERROR:livekit:livekit_ffi::server::room:283:livekit_ffi::server::room - error while connecting to a room: engine: signal failure: server error: 502 Bad Gateway - error code: 502

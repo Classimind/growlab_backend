@@ -6,6 +6,7 @@ import cv2
 from livekit import api, rtc
 from dotenv import load_dotenv
 
+
 # --- Video settings ---
 WIDTH = 1280
 HEIGHT = 720
@@ -18,14 +19,14 @@ async def main(room: rtc.Room, room_name: str):
     # --- Generate AccessToken ---
     token = (
         api.AccessToken(os.getenv("LIVEKIT_API_KEY"), os.getenv("LIVEKIT_API_SECRET"))
-        .with_identity("python-pub3")
+        .with_identity("python-pub")
         .with_name("Safal Shrestha")
         .with_grants(api.VideoGrants(room_join=True, room=room_name))
         .to_jwt()
     )
     print("Access Token:", token)
 
-    url = "ws://localhost:7880"  # replace with your LiveKit server URL
+    url = "ws://livekit.safalstha.com.np/"  # replace with your LiveKit server URL
     logger.info("Connecting to %s", url)
 
     try:

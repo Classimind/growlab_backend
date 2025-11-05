@@ -1,4 +1,5 @@
 from pydantic import BaseModel,Field
+from typing import Any,Union
 from datetime import datetime
 from enum import Enum
 
@@ -11,4 +12,4 @@ class ActuatorStatusHistory(BaseModel):
     actuator_name:str
     farm_name:str
     modified:datetime= Field(default_factory=datetime.now,description="Timestamp when status was modified")
-    status:ActuatorState
+    status:Union[ActuatorState,float]

@@ -6,15 +6,25 @@ from contextlib import asynccontextmanager
 from app.api.v1 import user
 from app.db.clients import connect_db,close_db
 from app.services.cache import connect_redis,close_redis
-from app.api.v1 import plant_database,actuator_states,app_ws
+from app.api.v1 import plant_database,actuator_states,app_ws,sensors
 from app.services.mqtt_service import mqtt_service
 import asyncio
 from app.services.user_service import UserService
-
+import logging
 loop = asyncio.get_running_loop()
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # logger for the debugging
+    logging.basicConfig(
+    level=logging.INFO,  
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler("aihydroponics.log"), 
+        logging.StreamHandler()                   
+    ]
+)
     
     await connect_db()
     await connect_redis()
@@ -52,6 +62,7 @@ app.include_router(plant_database.router, prefix="/plants", tags=["plants"])
 app.include_router(actuator_states.router,prefix="/actuator",tags=['actuators'])
 app.include_router(app_ws.router,prefix="/ws",tags=['websocket'])
 app.include_router(user.router,prefix="/users",tags=['users','register','login'])
+app.include_router(sensors.router,prefix="/sensors",tags=['sensors','data'])
 # Root endpoint
 @app.get("/")
 async def root():
