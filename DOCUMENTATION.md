@@ -498,15 +498,12 @@ Upon connecting, the server sends the last known actuator status:
   "type": "init",
   "status": "<current_status>"
 }
-
-
-
+```
 
 # Sensor API Documentation
 
-This API allows developers to **collect, retrieve, and stream sensor data** from farms. It supports REST endpoints for historical data and WebSocket for real-time updates.
+## This API allows developers to **collect, retrieve, and stream sensor data** from farms. It supports REST endpoints for historical data and WebSocket for real-time updates.
 
----
 
 ## Base URL
 
