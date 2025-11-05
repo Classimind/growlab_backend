@@ -34,7 +34,6 @@ def control_led(state):
     else:
         print(f"Failed to send message to topic {topic}")
 
-# Example usage
 while True:
     cmd = input("Enter LED state (ON/OFF/exit): ")
     if cmd.lower() == "exit":

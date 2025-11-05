@@ -3,7 +3,6 @@ import httpx  # pip install httpx
 
 # Path to your JSON file
 file_path = "data.json"
-
 # FastAPI endpoint
 url = "http://127.0.0.1:8000/plants/all"
 

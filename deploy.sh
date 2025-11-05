@@ -24,5 +24,4 @@ docker-compose -f $COMPOSE_FILE up -d --build
 
 # Clean up unused images
 # docker-compose down --rmi local
-
 echo "Deployment completed!"
