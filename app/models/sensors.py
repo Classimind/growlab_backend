@@ -1,13 +1,72 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field,field_validator
 from datetime import datetime, timezone
+from enum import Enum
+from typing import Optional,Tuple,Any
 
 class Sensor(BaseModel):
-    sensor_name: str
-    farm_id: str
+    sensor_id:str
     value: float
-    unit: str | None = None
-    sensor_type: str | None = None
     created: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         description="Timestamp when sensor data was created (UTC)"
     )
+
+class SensorType(str, Enum):
+    ANALOG = "analog"
+    DIGITAL = "digital"
+
+
+class ResponseSensor(BaseModel):
+    id:str
+    sensor_name: str
+    farm_id: str
+    unit: str
+    sensor_type: SensorType
+    range: Optional[Tuple[float, float]] = Field(
+        None,
+        description="(min, max) measurable values for analog sensors"
+    )
+    created: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+    @field_validator("range")
+    @classmethod
+    def validate_range(cls, value, info):
+        sensor_type = info.data.get("sensor_type")  # Access other fields
+
+        if sensor_type == SensorType.ANALOG:
+            if not value:
+                raise ValueError("Analog sensors must define a range (min, max).")
+            if len(value) != 2 or value[0] >= value[1]:
+                raise ValueError("Range must be a tuple of (min, max) where min < max.")
+        elif sensor_type == SensorType.DIGITAL:
+            return None
+
+        return value
+
+
+class RegisterSensor(BaseModel):
+    sensor_name: str
+    farm_id: str
+    unit: str
+    sensor_type: SensorType
+    range: Optional[Tuple[float, float]] = Field(
+        None,
+        description="(min, max) measurable values for analog sensors"
+    )
+    created: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+    @field_validator("range")
+    @classmethod
+    def validate_range(cls, value, info):
+        sensor_type = info.data.get("sensor_type")  # Access other fields
+
+        if sensor_type == SensorType.ANALOG:
+            if not value:
+                raise ValueError("Analog sensors must define a range (min, max).")
+            if len(value) != 2 or value[0] >= value[1]:
+                raise ValueError("Range must be a tuple of (min, max) where min < max.")
+        elif sensor_type == SensorType.DIGITAL:
+            return None
+
+        return value
+

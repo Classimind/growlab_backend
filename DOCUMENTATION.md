@@ -507,7 +507,7 @@ Upon connecting, the server sends the last known actuator status:
 
 ## Base URL
 
-All endpoints are prefixed with the API router, e.g. `/sensors`.
+All endpoints are prefixed with the API router, e.g. `/sensors-history`.
 
 ---
 
@@ -539,7 +539,7 @@ All endpoints are prefixed with the API router, e.g. `/sensors`.
 
 ### 1. Add a Single Sensor Reading
 
-**POST** `/sensors/collect`
+**POST** `/sensors-history/collect`
 **Request Body:** `Sensor` JSON
 **Response:** Saved `Sensor` object
 
@@ -549,7 +549,7 @@ All endpoints are prefixed with the API router, e.g. `/sensors`.
 
 ### 2. Add Multiple Sensor Readings (Batch)
 
-**POST** `/sensors/collect/batch`
+**POST** `/sensors-history/collect/batch`
 **Request Body:** List of `Sensor` objects
 **Response:** List of saved sensors
 
@@ -559,14 +559,14 @@ All endpoints are prefixed with the API router, e.g. `/sensors`.
 
 ### 3. Get All Sensor Readings
 
-**GET** `/sensors/`
+**GET** `/sensors-history/`
 **Response:** List of `Sensor` objects
 
 ---
 
 ### 4. Get Sensors by Farm
 
-**GET** `/sensors/farm/{farm_id}`
+**GET** `/sensors-history/farm/{farm_id}`
 **Path Parameter:** `farm_id`
 **Response:** List of `Sensor` objects for the specified farm.
 
@@ -574,7 +574,7 @@ All endpoints are prefixed with the API router, e.g. `/sensors`.
 
 ### 5. Get Sensors by Date Range
 
-**GET** `/sensors/range/`
+**GET** `/sensors-history/range/`
 **Query Parameters:** `start` (ISO datetime), `end` (ISO datetime)
 **Response:** List of `Sensor` objects within the date range.
 
@@ -582,7 +582,7 @@ All endpoints are prefixed with the API router, e.g. `/sensors`.
 
 ### 6. Get Sensors by Farm and Date Range
 
-**GET** `/sensors/farm/{farm_id}/range/`
+**GET** `/sensors-history/farm/{farm_id}/range/`
 **Path Parameter:** `farm_id`
 **Query Parameters:** `start`, `end` (ISO datetime)
 **Response:** List of `Sensor` objects filtered by farm and date range.
@@ -591,7 +591,7 @@ All endpoints are prefixed with the API router, e.g. `/sensors`.
 
 ### 7. Get Sensors by Farm and Sensor Name
 
-**GET** `/sensors/farm/{farm_id}/sensor/{sensor_name}`
+**GET** `/sensors-history/farm/{farm_id}/sensor/{sensor_name}`
 **Path Parameters:**
 
 * `farm_id`
@@ -605,7 +605,7 @@ All endpoints are prefixed with the API router, e.g. `/sensors`.
 
 ### Live Updates
 
-**WS** `/sensors/live/{farm_id}/{sensor_name}`
+**WS** `/sensors-history/live/{farm_id}/{sensor_name}`
 
 **Behavior:**
 
@@ -628,5 +628,203 @@ All endpoints are prefixed with the API router, e.g. `/sensors`.
   }
 }
 ```
+
+
+# Sensors API Documentation
+
+
+## Base URL
+
+```
+/sensors
+```
+
+---
+
+## Models
+
+### `SensorType` (Enum)
+
+| Value   | Description    |
+| ------- | -------------- |
+| ANALOG  | Analog sensor  |
+| DIGITAL | Digital sensor |
+
+---
+
+### `RegisterSensor` (Request Model)
+
+| Field       | Type                | Required    | Description                                            |
+| ----------- | ------------------- | ----------- | ------------------------------------------------------ |
+| sensor_name | string              | Yes         | Name of the sensor                                     |
+| farm_id     | string              | Yes         | ID of the farm this sensor belongs to                  |
+| unit        | string              | Yes         | Measurement unit of the sensor                         |
+| sensor_type | SensorType          | Yes         | Type of sensor: ANALOG or DIGITAL                      |
+| range       | Tuple[float, float] | Conditional | Required if sensor_type is ANALOG; ignored for DIGITAL |
+| created     | datetime            | Optional    | Timestamp of creation (defaults to current UTC time)   |
+
+> **Validation:**
+>
+> * Analog sensors must define a valid `(min, max)` range where `min < max`.
+> * Digital sensors ignore the `range` field.
+
+---
+
+### `ResponseSensor` (Response Model)
+
+| Field       | Type                | Description                                |
+| ----------- | ------------------- | ------------------------------------------ |
+| id          | string              | Sensor ID (MongoDB ObjectId as string)     |
+| sensor_name | string              | Name of the sensor                         |
+| farm_id     | string              | ID of the farm                             |
+| unit        | string              | Measurement unit                           |
+| sensor_type | SensorType          | Type of sensor                             |
+| range       | Tuple[float, float] | Range for analog sensors; null for digital |
+| created     | datetime            | Sensor creation timestamp                  |
+
+---
+
+## Endpoints
+
+### 1. Create Sensor
+
+**POST** `/sensors/`
+
+* **Request Body:** `RegisterSensor`
+* **Response:** `ResponseSensor`
+* **Status Codes:**
+
+  * `201 CREATED` – Sensor created successfully
+  * `500 INTERNAL SERVER ERROR` – Unexpected server error
+
+**Behavior:**
+
+* Inserts the sensor only if it does not already exist with the same `farm_id` and **case-insensitive** `sensor_name`.
+* Returns the existing sensor if found.
+
+**Example Request:**
+
+```json
+{
+  "sensor_name": "Temperature",
+  "farm_id": "farm123",
+  "unit": "°C",
+  "sensor_type": "ANALOG",
+  "range": [0, 100]
+}
+```
+
+**Example Response:**
+
+```json
+{
+  "id": "650c1e2d5a0f1b2c3d4e5f6a",
+  "sensor_name": "Temperature",
+  "farm_id": "farm123",
+  "unit": "°C",
+  "sensor_type": "ANALOG",
+  "range": [0, 100],
+  "created": "2025-11-06T21:00:00Z"
+}
+```
+
+---
+
+### 2. List Sensors with Pagination
+
+**GET** `/sensors/`
+
+* **Query Parameters:**
+
+  * `page` (int, default=1) – Page number (starting from 1)
+  * `limit` (int, default=10) – Number of sensors per page
+
+* **Response:** List of `ResponseSensor`
+
+**Example Request:**
+
+```
+GET /sensors/?page=2&limit=5
+```
+
+**Example Response:**
+
+```json
+[
+  {
+    "id": "650c1e2d5a0f1b2c3d4e5f6b",
+    "sensor_name": "Humidity",
+    "farm_id": "farm123",
+    "unit": "%",
+    "sensor_type": "ANALOG",
+    "range": [0, 100],
+    "created": "2025-11-06T21:05:00Z"
+  }
+]
+```
+
+---
+
+### 3. Get Sensor by ID
+
+**GET** `/sensors/{sensor_id}`
+
+* **Path Parameter:** `sensor_id` – MongoDB ObjectId as string
+* **Response:** `ResponseSensor`
+* **Status Codes:**
+
+  * `200 OK` – Sensor found
+  * `400 BAD REQUEST` – Invalid ID format
+  * `404 NOT FOUND` – Sensor not found
+
+---
+
+### 4. Get Sensors by Farm
+
+**GET** `/sensors/farm/{farm_id}`
+
+* **Path Parameter:** `farm_id` – Farm ID
+* **Response:** List of `RegisterSensor`
+* **Status Codes:**
+
+  * `200 OK` – Returns all sensors for the given farm
+
+---
+
+### 5. Update Sensor
+
+**PUT** `/sensors/{sensor_id}`
+
+* **Path Parameter:** `sensor_id` – MongoDB ObjectId
+* **Request Body:** Partial dictionary of updated fields
+* **Response:** `ResponseSensor`
+* **Status Codes:**
+
+  * `200 OK` – Sensor updated
+  * `400 BAD REQUEST` – Invalid ID
+  * `404 NOT FOUND` – Sensor not found or no changes made
+
+---
+
+### 6. Delete Sensor
+
+**DELETE** `/sensors/{sensor_id}`
+
+* **Path Parameter:** `sensor_id` – MongoDB ObjectId
+* **Response:** JSON message
+* **Status Codes:**
+
+  * `204 NO CONTENT` – Sensor deleted successfully
+  * `400 BAD REQUEST` – Invalid ID
+  * `404 NOT FOUND` – Sensor not found
+
+**Example Response:**
+
+```json
+{
+  "message": "Sensor and its history deleted successfully"
+}
+```
+
 
 

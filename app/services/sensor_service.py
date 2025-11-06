@@ -1,9 +1,12 @@
 from app.db.clients import mongodb
-from app.models.sensors import Sensor
+from app.models.sensors import Sensor,RegisterSensor,ResponseSensor
 from fastapi import HTTPException
-from uuid import uuid4
+from bson.objectid import ObjectId
 from datetime import datetime, timezone
-from typing import List
+from typing import List,Optional
+from pymongo import MongoClient
+import re
+
 
 COLLECTION_NAME = "sensors_values"
 
@@ -108,3 +111,85 @@ class CollectSensorValueService:
                 detail=f"Error fetching sensor data for sensor '{sensor_name}' in farm '{farm_id}': {str(e)}"
             )
 
+class SensorService:
+    def __init__(self):
+        self.collection_name = "sensors"
+
+    def get_collection(self):
+        return mongodb.db[self.collection_name] 
+
+
+    async def create_sensor(self, sensor_data: RegisterSensor) -> ResponseSensor:
+        collection = self.get_collection()
+        sensor_dict = sensor_data.model_dump()
+        existing = await collection.find_one({
+            "farm_id": sensor_dict["farm_id"],
+            "sensor_name": re.compile(f"^{re.escape(sensor_dict['sensor_name'])}$", re.IGNORECASE)
+        })
+
+        if existing:
+            existing["id"] = str(existing["_id"])
+            return ResponseSensor(**existing)
+
+        result = await collection.insert_one(sensor_dict)
+        sensor_dict["id"] = str(result.inserted_id)
+
+        return ResponseSensor(**sensor_dict)
+
+
+    async def list_sensors(self, skip: int = 0, limit: int = 10) -> List[ResponseSensor]:
+            collection = self.get_collection()
+            cursor = collection.find().skip(skip).limit(limit)
+            docs = await cursor.to_list(length=limit)
+            sensors = []
+            for doc in docs:
+                doc["id"] = str(doc["_id"])
+                sensors.append(ResponseSensor(**doc))
+
+            return sensors
+
+
+    # Get sensor by ID
+    async def get_sensor(self, sensor_id: str) -> Optional[ResponseSensor]:
+        collection = self.get_collection()
+        doc =await collection.find_one({"_id": ObjectId(sensor_id)})
+        if doc:
+            doc['id']=str(doc['_id'])
+            return ResponseSensor(**doc)
+        return None
+    
+    async def get_sensors_by_farm(self, farm_id: str) -> List[ResponseSensor]:
+        collection = self.get_collection()
+        docs  =await collection.find({"farm_id": farm_id}).to_list()
+        for doc in docs:
+            doc['id']=str(doc['_id'])
+        return [ResponseSensor(**doc) for doc in docs]
+
+    # Update sensor by ID
+    async def update_sensor(self, sensor_id: str, updated_data: dict) -> Optional[ResponseSensor]:
+        collection = self.get_collection()
+        result = collection.update_one(
+            {"_id": ObjectId(sensor_id)},
+            {"$set": updated_data}
+        )
+        if result.modified_count:
+            return self.get_sensor(sensor_id)
+        return None
+
+    def delete_sensor(self, sensor_id: str) -> bool:
+        client: MongoClient = mongodb.client
+        sensors_collection = self.get_collection()
+        history_collection = mongodb.db[COLLECTION_NAME]
+
+        with client.start_session() as session:
+            with session.start_transaction():
+                # Delete the sensor
+                result = sensors_collection.delete_one({"_id": ObjectId(sensor_id)}, session=session)
+                if result.deleted_count == 0:
+                    # Sensor not found, abort transaction
+                    session.abort_transaction()
+                    return False
+                # Delete all related sensor values/history
+                history_collection.delete_many({"sensor_id": sensor_id}, session=session)
+
+        return True
