@@ -13,7 +13,7 @@ async def create_sensor(sensor: Sensor):
     try:
         await sensor_service.add_sensor_value(sensor)
         data = sensor.model_dump()  # returns dict
-        await sensormanager.send_update(sensor.farm_id, sensor.sensor_name, data)
+        # await sensormanager.send_update(sensor.farm_id, sensor.sensor_name, data)
         return sensor
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error saving sensor: {str(e)}")
