@@ -28,17 +28,15 @@ async def websocket_endpoint(websocket:WebSocket,farm_name:str,actuator_name:str
         manager.disconnect(farm_name,actuator_name,websocket)
 
 
-@router.websocket("/sensors/live/{farm_id}/{sensor_name}")
-async def websocket_sensor(websocket: WebSocket, farm_id: str, sensor_name: str):
-    await sensormanager.connect(farm_id, sensor_name, websocket)
+@router.websocket("/sensors/live/{sensor_id}")
+async def websocket_sensor(websocket: WebSocket, sensor_id: str):
+    await sensormanager.connect(sensor_id, websocket)
     try:
-        # Keep connection alive
         while True:
-            await websocket.receive_text()  # just to keep connection open
-
+            await websocket.receive_text() 
     except Exception as e:
         print(f"Error in websocket: {e}")
     finally:
-        manager.disconnect(farm_id, sensor_name, websocket)
+        manager.disconnect(sensor_id, websocket)
 
 

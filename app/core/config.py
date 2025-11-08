@@ -32,7 +32,7 @@ class Settings(BaseSettings):
         self.MONGO_URI = f"mongodb://{self.MONGO_USER}:{self.MONGO_PASSWORD}@{self.MONGO_HOST}:{self.MONGO_PORT}/"
         # self.MONGO_URI = f"mongodb://localhost:{self.MONGO_PORT}"
 
-        
+
         # Parse ALLOWED_ORIGINS from env string
         origins = os.getenv("ALLOWED_ORIGINS")
         if origins and isinstance(origins, str):
