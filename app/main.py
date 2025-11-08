@@ -30,7 +30,6 @@ async def lifespan(app: FastAPI):
     await connect_redis()
     print("Initalized the mongodb and redis ")
     await mqtt_service.start(loop)
-
     # Create the indexes
     user_services = UserService()
     await user_services.init_indexes()
