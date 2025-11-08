@@ -4,7 +4,7 @@ from typing import List
 from app.models.sensors import Sensor
 from app.services.ws_connection_manager_sensor import sensormanager
 from app.services.sensor_service import CollectSensorValueService
-from datetime import datetime
+
 
 sensor_service = CollectSensorValueService()
 
@@ -27,46 +27,23 @@ async def create_sensors_batch(sensor: List[Sensor]):
         raise HTTPException(status_code=500, detail=f"Error saving sensor: {str(e)}")
 
 
-@router.get("/", response_model=List[Sensor])
-async def list_sensors():
+@router.get("/latest/{sensor_id}",response_model=Sensor)
+async def get_latest_sensor(sensor_id: str):
     try:
-        return await sensor_service.get_all_sensors()
+        return await sensor_service.get_latest_sensor_data(sensor_id)
     except HTTPException as e:
         raise e
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error retrieving latest sensor data: {str(e)}")
 
 
-@router.get("/farm/{farm_id}", response_model=List[Sensor])
-async def list_sensors_by_farm(farm_id: str):
+
+@router.get("/recent/{sensor_id}")
+async def get_latest_sensor_data(sensor_id: str):
     try:
-        return await sensor_service.get_sensors_by_farm(farm_id)
+        data = await sensor_service.get_recent_sensor_data(sensor_id)
+        return {"success": True, "count": len(data), "data": data}
     except HTTPException as e:
         raise e
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
-
-
-@router.get("/range/", response_model=List[Sensor])
-async def list_sensors_by_date_range(start: datetime, end: datetime):
-    try:
-        return await sensor_service.get_sensors_by_date_range(start, end)
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
-
-
-@router.get("/farm/{farm_id}/range/", response_model=List[Sensor])
-async def list_sensors_by_farm_and_date_range(farm_id: str, start: datetime, end: datetime):
-    try:
-        return await sensor_service.get_sensors_by_farm_and_date_range(farm_id, start, end)
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
-    
-
-@router.get("/farm/{farm_id}/sensor/{sensor_name}")
-async def list_sensors_by_name_and_farm(farm_id: str, sensor_name: str):
-    return await sensor_service.get_sensors_by_name_and_farm(sensor_name, farm_id)
+        raise HTTPException(status_code=500, detail=f"Error fetching sensor data: {str(e)}")

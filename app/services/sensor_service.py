@@ -51,65 +51,46 @@ class CollectSensorValueService:
             return {"inserted_ids": []}
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error inserting batch sensor data: {str(e)}")
-        
-    async def get_all_sensors(self, limit: int = 100):
-        """Get all sensor values (limited)."""
-        try:
-            collection = self.get_collection()  # Get collection object
-            sensors = await collection.find().to_list(limit)
-            return sensors
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Error fetching sensor data: {str(e)}")
-
-    async def get_sensors_by_farm(self, farm_id: str, limit: int = 100):
-        """Get sensor values for a specific farm."""
-        try:
-            collection = self.get_collection()  # Get collection object
-            sensors = await collection.find({"farm_id": farm_id}).to_list(limit)
-            return sensors
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Error fetching sensor data for farm {farm_id}: {str(e)}")
-
-    async def get_sensors_by_date_range(self, start: datetime, end: datetime, limit: int = 100):
-        """Get sensor values within a specific date range."""
-        try:
-            collection = self.get_collection()  # Get collection object
-            sensors = await collection.find(
-                {"created": {"$gte": start, "$lte": end}}
-            ).to_list(limit)
-            return sensors
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Error fetching sensor data for date range: {str(e)}")
-
-    async def get_sensors_by_farm_and_date_range(self, farm_id: str, start: datetime, end: datetime, limit: int = 100):
-        """Get sensor values for a farm within a specific date range."""
-        try:
-            collection = self.get_collection()  # Get collection object
-            sensors = await collection.find(
-                {
-                    "farm_id": farm_id,
-                    "created": {"$gte": start, "$lte": end}
-                }
-            ).to_list(limit)
-            return sensors
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Error fetching sensor data for farm {farm_id} in date range: {str(e)}")
-
-    async def get_sensors_by_name_and_farm(self, sensor_name: str, farm_id: str, limit: int = 100):
+            
+    async def get_latest_sensor_data(self, sensor_id: str):
         try:
             collection = self.get_collection()
-            cursor = collection.find({"sensor_name": sensor_name, "farm_id": farm_id}).limit(limit)
-            sensors = []
-            async for doc in cursor:
-                # Convert ObjectId to string
-                doc["_id"] = str(doc["_id"])
-                sensors.append(doc)
-            return sensors
+            sensor_data = await collection.find_one(
+                    {"sensor_id": sensor_id},
+                    sort=[("timestamp", -1)]
+                )
+            if not sensor_data:
+                    raise HTTPException(status_code=404, detail="Sensor data not found")
+
+            sensor_data["id"] = str(sensor_data["_id"])
+            return sensor_data
+
         except Exception as e:
-            raise HTTPException(
-                status_code=500,
-                detail=f"Error fetching sensor data for sensor '{sensor_name}' in farm '{farm_id}': {str(e)}"
-            )
+            raise HTTPException(status_code=500, detail=f"Error retrieving sensor data: {str(e)}")
+        
+    async def get_recent_sensor_data(self, sensor_id: str):
+        try:
+            collection = self.get_collection()
+
+            cursor = collection.find(
+                {"sensor_id": sensor_id}
+            ).sort("timestamp", -1).limit(25)
+
+            sensor_data = await cursor.to_list(length=25)
+
+            if not sensor_data:
+                raise HTTPException(status_code=404, detail="Sensor data not found")
+            
+            for doc in sensor_data:
+                doc["id"] = str(doc["_id"])
+                del doc["_id"]
+
+            return sensor_data
+
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error retrieving sensor data: {str(e)}")
+
+
 
 class SensorService:
     def __init__(self):
