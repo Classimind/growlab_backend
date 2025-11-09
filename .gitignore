@@ -3,3 +3,4 @@ hydroenv
 .env
 /app/.env
 .log
+aihydroponics.log
