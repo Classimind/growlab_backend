@@ -142,9 +142,11 @@ class SensorService:
     async def get_sensors_by_farm(self, farm_id: str) -> List[ResponseSensor]:
         collection = self.get_collection()
         docs  =await collection.find({"farm_id": farm_id}).to_list()
+        sensors = []
         for doc in docs:
             doc['id']=str(doc['_id'])
-        return [ResponseSensor(**doc) for doc in docs]
+            sensors.append(ResponseSensor(**doc))
+        return sensors
 
     # Update sensor by ID
     async def update_sensor(self, sensor_id: str, updated_data: dict) -> Optional[ResponseSensor]:
