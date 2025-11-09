@@ -27,7 +27,6 @@ async def websocket_endpoint(websocket:WebSocket,farm_name:str,actuator_name:str
     finally:
         manager.disconnect(farm_name,actuator_name,websocket)
 
-
 @router.websocket("/sensors/live/{sensor_id}")
 async def websocket_sensor(websocket: WebSocket, sensor_id: str):
     await sensormanager.connect(sensor_id, websocket)
