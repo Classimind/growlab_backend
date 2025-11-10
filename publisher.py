@@ -26,7 +26,7 @@ async def main(room: rtc.Room, room_name: str):
     )
     print("Access Token:", token)
 
-    url = "https://test-3sik42.sandbox.livekit.io"  # replace with your LiveKit server URL
+    url = "ws://livekit.safalstha.com.np:9881"  # replace with your LiveKit server URL
     logger.info("Connecting to %s", url)
 
     try:

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status,Query
 from typing import List
 from bson import ObjectId
-from app.models.sensors import RegisterSensor, SensorType,ResponseSensor
+from app.models.sensors import RegisterSensor,ResponseSensor
 from app.services.sensor_service import SensorService    
 
 router = APIRouter(prefix="/sensors", tags=["Sensors"])

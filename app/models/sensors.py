@@ -11,7 +11,7 @@ class Sensor(BaseModel):
         description="Timestamp when sensor data was created (UTC)"
     )
 
-class SensorType(str, Enum):
+class DeviceType(str, Enum):
     ANALOG = "analog"
     DIGITAL = "digital"
 
@@ -21,7 +21,7 @@ class ResponseSensor(BaseModel):
     sensor_name: str
     farm_id: str
     unit: str
-    sensor_type: SensorType
+    sensor_type: DeviceType
     range: Optional[Tuple[float, float]] = Field(
         None,
         description="(min, max) measurable values for analog sensors"
@@ -33,12 +33,12 @@ class ResponseSensor(BaseModel):
     def validate_range(cls, value, info):
         sensor_type = info.data.get("sensor_type")  # Access other fields
 
-        if sensor_type == SensorType.ANALOG:
+        if sensor_type == DeviceType.ANALOG:
             if not value:
                 raise ValueError("Analog sensors must define a range (min, max).")
             if len(value) != 2 or value[0] >= value[1]:
                 raise ValueError("Range must be a tuple of (min, max) where min < max.")
-        elif sensor_type == SensorType.DIGITAL:
+        elif sensor_type == DeviceType.DIGITAL:
             return None
 
         return value
@@ -48,7 +48,7 @@ class RegisterSensor(BaseModel):
     sensor_name: str
     farm_id: str
     unit: str
-    sensor_type: SensorType
+    sensor_type: DeviceType
     range: Optional[Tuple[float, float]] = Field(
         None,
         description="(min, max) measurable values for analog sensors"
@@ -60,12 +60,12 @@ class RegisterSensor(BaseModel):
     def validate_range(cls, value, info):
         sensor_type = info.data.get("sensor_type")  # Access other fields
 
-        if sensor_type == SensorType.ANALOG:
+        if sensor_type == DeviceType.ANALOG:
             if not value:
                 raise ValueError("Analog sensors must define a range (min, max).")
             if len(value) != 2 or value[0] >= value[1]:
                 raise ValueError("Range must be a tuple of (min, max) where min < max.")
-        elif sensor_type == SensorType.DIGITAL:
+        elif sensor_type == DeviceType.DIGITAL:
             return None
 
         return value
