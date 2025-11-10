@@ -68,6 +68,3 @@ app.include_router(actuator.router)
 @app.get("/")
 async def root():
     return {"message": "Hydroponics AI"}
-
-
-
