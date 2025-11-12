@@ -56,7 +56,6 @@ class ActuatorStatusService:
         ).skip(skip).limit(limit)
 
         results = [ResponseActuatorStatus.from_mongo(doc) async for doc in cursor]
-
         # Compute total pages
         total_pages = (total + limit - 1) // limit if total > 0 else 1
 
