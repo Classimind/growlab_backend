@@ -16,7 +16,7 @@ async def websocket_endpoint(websocket:WebSocket,actuatorId:str):
     try:
         last_status = await service.get_actuator_status_by_actuator_id(actuatorId)
         if last_status:
-            await websocket.send_json({"type":"init","status":last_status['value']})
+            await websocket.send_json({"type":"init","status":last_status.value})
         else:
             await websocket.send_json({"type":"init","status":'none'})
         
