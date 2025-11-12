@@ -3,6 +3,7 @@ import asyncio
 from dotenv import load_dotenv
 import os
 import logging
+from typing import Union
 
 load_dotenv()
 
@@ -20,8 +21,8 @@ class MqttService:
 
         self.client.username_pw_set(self.username,self.password)
 
-        self.client.on_connect = self.on_connect
-        self.client.on_message = self.on_message
+        # self.client.on_connect = self.on_connect
+        # self.client.on_message = self.on_message
 
         self.loop = None 
 
@@ -43,11 +44,22 @@ class MqttService:
         self.client.disconnect()
         logger.info("MQTT stopped")
 
-    def on_connect(self,client,userdata,flags,rc):
-        logger.info(f"Connected with result code {rc}")
-        #subscribe to all actuators
-        client.subscribe("actuators/+/+/status")
+    # def on_connect(self,client,userdata,flags,rc):
+    #     logger.info(f"Connected with result code {rc}")
+    #     #subscribe to all actuators
+    #     client.subscribe("actuators/+/+/status")
     
+    def publish(self, topic: str, data: str, qos: int = 1, retain: bool = False):
+        topic = f'actuators/{topic}/status'
+        if not self.client.is_connected():
+            logger.warning("MQTT client not connected, attempting to reconnect...")
+            self.client.reconnect()
+        result = self.client.publish(topic, payload=data, qos=qos, retain=retain)
+        if result.rc == mqtt.MQTT_ERR_SUCCESS:
+            return True
+        else:
+            return False
+
     def on_message(self,client,userdata,msg):
         from app.services.ws_connection_manager import manager
         payload = msg.payload.decode('utf-8').lower()

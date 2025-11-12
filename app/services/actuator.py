@@ -1,8 +1,6 @@
-from motor.motor_asyncio import AsyncIOMotorClient
-from app.models.actuator import Actuator, ActuatorStatus, ResponseActuator
+from app.models.actuator import Actuator, ResponseActuator
 from typing import List, Optional
 from bson import ObjectId
-from datetime import datetime
 from fastapi import HTTPException, status
 from app.db.clients import mongodb
 
@@ -84,30 +82,3 @@ class ActuatorService:
         collection = self.get_collection()
         result = await collection.delete_one({"_id": ObjectId(actuator_id)})
         return result.deleted_count > 0
-
-    async def create_actuator_status(self, actuator_status: ActuatorStatus) -> ActuatorStatus:
-        # Create a new actuator status
-        collection = self.get_collection()
-        status_data = actuator_status.model_dump()
-        result = await collection.insert_one(status_data)
-        status_data["_id"] = str(result.inserted_id)
-        return ActuatorStatus(**status_data)
-        
-    async def get_actuator_status_by_actuator_id(self, actuator_id: str) -> Optional[ActuatorStatus]:
-        # Get actuator status by actuator ID
-        collection = self.get_collection()
-        status = await collection.find_one({"actuator_id": actuator_id})
-        if status:
-            return ActuatorStatus(**status)
-        return None
-        
-    async def update_actuator_status(self, actuator_id: str, value: str) -> Optional[ActuatorStatus]:
-        # Update the status of an actuator
-        collection = self.get_collection()
-        result = await collection.update_one(
-            {"actuator_id": actuator_id},
-            {"$set": {"value": value, "created": datetime.utcnow()}}
-        )
-        if result.modified_count > 0:
-            return await self.get_actuator_status_by_actuator_id(actuator_id)
-        return None

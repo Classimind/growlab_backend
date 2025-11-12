@@ -17,13 +17,11 @@ class Actuator(BaseModel):
     range: Optional[Tuple[float, float]] = Field(
         None, description="(min, max) operational values for the actuator"
     )
-    topic: Optional[str] = Field(None, description="Communication topic (e.g., MQTT topic)")
     unit: Optional[str] = Field(None, description="Measurement or control unit (%, °C, etc.)")
     status: ActuatorStatus = Field(
         default=ActuatorStatus.INACTIVE,
         description="Current status of the actuator"
     )
-    topic: Optional[str] = Field(None, description="Communication topic (e.g., MQTT topic)")
     created: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         description="Timestamp when actuator record was created (UTC)"
@@ -68,5 +66,18 @@ class ActuatorStatus(BaseModel):
         default_factory=lambda: datetime.now(timezone.utc),
         description="Timestamp when actuator record was created (UTC)"
     )
+
+class ResponseActuatorStatus(ActuatorStatus,BaseModel):
+    
+    id:str = Field(alias='_id')
+    class Config:
+        json_encoders = {
+            ObjectId: str 
+        }
+    @classmethod
+    def from_mongo(cls,doc:dict):
+        if "_id" in doc:
+            doc["_id"] =str(doc["_id"])
+        return cls(**doc)
 
 

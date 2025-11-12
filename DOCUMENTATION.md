@@ -470,22 +470,21 @@ This guide explains how to use the WebSocket endpoint to monitor actuator states
 
 ## Endpoint
 
-`ws://<server_address>/actuators/{farm_name}/{actuator_name}`
+`ws://<server_address>/actuators/{actuatorId}`
 
 **Path Parameters:**
-- `farm_name` – Name of the farm.
-- `actuator_name` – Name of the actuator.
+- `actuatorId` – Actuator Id
 
 **Example URL:**
 
-`ws://localhost:8000/actuators/farm1/pump1`
+`ws://localhost:8000/actuators/6913de90b50684f5a0cfbb6d`
 
 ---
 
 ## Connecting
 
-1. Open a WebSocket connection to the endpoint with the correct `farm_name` and `actuator_name`.
-2. The server registers the connection and sends the last known actuator status.
+1. Open a WebSocket connection to the endpoint with the correct `actuatorId`.
+2. The server registers the connection and sends the last known actuator status. If there is no status then it return none value.
 
 ---
 
@@ -498,7 +497,268 @@ Upon connecting, the server sends the last known actuator status:
   "type": "init",
   "status": "<current_status>"
 }
+
 ```
+
+# Actuators API Documentation
+
+## Overview
+The **Actuators API** provides endpoints to manage actuators, control them via MQTT, and retrieve their status history. It supports creating, updating, deleting, and querying actuators, as well as sending actuator commands and tracking their statuses in real-time.
+
+**Base URL:** `/actuators`
+
+---
+
+## Table of Contents
+
+- [Actuator Endpoints](#actuator-endpoints)  
+  - [Create Actuator](#create-actuator)  
+  - [Get Actuator by ID](#get-actuator-by-id)  
+  - [Get All Actuators](#get-all-actuators)  
+  - [Update Actuator](#update-actuator)  
+  - [Delete Actuator](#delete-actuator)  
+- [Actuator Status Endpoints](#actuator-status-endpoints)  
+  - [Send Actuator Command](#send-actuator-command)  
+  - [Get Actuator Status by ID](#get-actuator-status-by-id)  
+  - [Get Actuator Status History](#get-actuator-status-history)  
+
+---
+
+## Actuator Endpoints
+
+### Create Actuator
+
+**Endpoint:** `POST /actuators/`  
+**Description:** Create a new actuator.  
+**Request Body:**
+
+```json
+{
+  "actuator_name": "Pump1",
+  "farmId": "farm123",
+  "actuator_type": "ANALOG",
+  "range": [0, 100],
+  "unit": "%",
+  "status": "inactive"
+}
+````
+
+**Response (201 Created):**
+
+```json
+{
+  "_id": "64f0c0e12345abcd1234",
+  "actuator_name": "Pump1",
+  "farmId": "farm123",
+  "actuator_type": "ANALOG",
+  "range": [0, 100],
+  "unit": "%",
+  "status": "inactive",
+  "created": "2025-11-12T12:00:00Z"
+}
+```
+
+**Errors:**
+
+* 400 Bad Request – Failed to create actuator.
+* 500 Internal Server Error – Unexpected error.
+
+---
+
+### Get Actuator by ID
+
+**Endpoint:** `GET /actuators/{actuator_id}`
+**Description:** Retrieve a single actuator by its ID.
+
+**Response Example:**
+
+```json
+{
+  "_id": "64f0c0e12345abcd1234",
+  "actuator_name": "Pump1",
+  "farmId": "farm123",
+  "actuator_type": "ANALOG",
+  "range": [0, 100],
+  "unit": "%",
+  "status": "inactive",
+  "created": "2025-11-12T12:00:00Z"
+}
+```
+
+**Errors:**
+
+* 404 Not Found – Actuator not found.
+
+---
+
+### Get All Actuators
+
+**Endpoint:** `GET /actuators/`
+**Query Parameters:**
+
+* `farm_id` (optional) – Filter actuators by farm ID.
+
+**Response Example:**
+
+```json
+[
+  {
+    "_id": "64f0c0e12345abcd1234",
+    "actuator_name": "Pump1",
+    "farmId": "farm123",
+    "actuator_type": "ANALOG",
+    "range": [0, 100],
+    "unit": "%",
+    "status": "inactive",
+    "created": "2025-11-12T12:00:00Z"
+  }
+]
+```
+
+---
+
+### Update Actuator
+
+**Endpoint:** `PUT /actuators/{actuator_id}`
+**Description:** Update actuator properties.
+
+**Request Body:** Same as **Create Actuator**.
+
+**Response Example:**
+
+```json
+{
+  "_id": "64f0c0e12345abcd1234",
+  "actuator_name": "Pump1 Updated",
+  "farmId": "farm123",
+  "actuator_type": "ANALOG",
+  "range": [0, 100],
+  "unit": "%",
+  "status": "active",
+  "created": "2025-11-12T12:00:00Z"
+}
+```
+
+**Errors:**
+
+* 404 Not Found – Actuator not found.
+
+---
+
+### Delete Actuator
+
+**Endpoint:** `DELETE /actuators/{actuator_id}`
+**Description:** Delete an actuator by ID.
+
+**Response Example:**
+
+```json
+{
+  "detail": "Actuator with ID 64f0c0e12345abcd1234 deleted successfully."
+}
+```
+
+**Errors:**
+
+* 404 Not Found – Actuator not found.
+
+---
+
+## Actuator Status Endpoints
+
+### Send Actuator Command
+
+**Endpoint:** `POST /actuators/actuator-command/`
+**Description:** Send a command to an actuator and update its status via MQTT and WebSocket.
+
+**Request Body Example:**
+
+```json
+{
+  "actuator_id": "64f0c0e12345abcd1234",
+  "value": 75
+}
+```
+
+**Response Example:**
+
+```json
+{
+  "status": "ok"
+}
+```
+
+**Errors:**
+
+* 500 Internal Server Error – MQTT or database error.
+
+---
+
+### Get Actuator Status by ID
+
+**Endpoint:** `GET /actuators/actuator-command-status/{actuator_id}`
+**Description:** Get the latest status of an actuator.
+
+**Response Example:**
+
+```json
+{
+  "actuator_id": "64f0c0e12345abcd1234",
+  "value": 75,
+  "created": "2025-11-12T12:15:00Z"
+}
+```
+
+**Errors:**
+
+* 404 Not Found – Actuator status not found.
+
+---
+
+### Get Actuator Status History
+
+**Endpoint:** `GET /actuators/history/{actuator_id}/status`
+**Query Parameters:**
+
+* `page` (default: 1) – Page number.
+* `limit` (default: 10, max: 100) – Number of items per page.
+
+**Response Example:**
+
+```json
+{
+  "actuator_id": "64f0c0e12345abcd1234",
+  "page": 1,
+  "limit": 10,
+  "total": 25,
+  "total_pages": 3,
+  "items": [
+    {
+      "actuator_id": "64f0c0e12345abcd1234",
+      "value": 75,
+      "created": "2025-11-12T12:15:00Z"
+    }
+  ]
+}
+```
+
+**Errors:**
+
+* 404 Not Found – No actuator status found.
+
+---
+
+## Notes
+
+* **Actuator Types:** `ANALOG`, `DIGITAL`
+* **Status Enum:** `ACTIVE`, `INACTIVE`, `FAULTY`
+* **Units:** Optional, e.g., `%`, `°C`, `V`.
+* Analog actuators **must define a valid range** (min < max). Digital actuators **ignore range**.
+
+
+
+
+
 
 # Sensor API Documentation
 
