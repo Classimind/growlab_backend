@@ -28,7 +28,7 @@ class ConnectionManager:
         if actuatorId in self.active_connections:
             for ws in self.active_connections[actuatorId]:
                 try:
-                    await ws.send_json({"type":"update","data":value})
+                    await ws.send_json({"type":"update","status":value})
                 except  Exception as e:
                     self.disconnect(actuatorId, ws)
 
