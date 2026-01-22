@@ -13,7 +13,6 @@ jobs:
       MONGO_HOST: ${{ secrets.MONGO_HOST }}
       MONGO_PORT: ${{ secrets.MONGO_PORT }}
 
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
