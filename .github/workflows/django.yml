@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main  # deploy only when pushing to main branch
-
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
