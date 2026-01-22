@@ -88,4 +88,4 @@ class MqttService:
             logger.warning("Main loop not set. Messagge not processed")
 
 
-mqtt_service = MqttService("hydroponics","hydroponics",os.getenv("BROKER_URL"))
+mqtt_service = MqttService("hydroponics","hydroponics@",os.getenv("BROKER_URL"))

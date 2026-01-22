@@ -16,6 +16,7 @@ python-jose[cryptography]
 passlib[argon2] 
 onnx
 onnxscript
+torch
 onnxruntime-gpu 
 pillow 
 numpy 
