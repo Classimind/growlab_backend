@@ -8,9 +8,12 @@ class MongoDB:
 mongodb = MongoDB()
 
 async def connect_db():
-    mongodb.client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGO_URI)
-    mongodb.db = mongodb.client[settings.MONGO_DB_NAME]
-    print("MongoDB connected")
+    try:
+        mongodb.client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGO_URI)
+        mongodb.db = mongodb.client[settings.MONGO_DB_NAME]
+        print("MongoDB connected")
+    except:
+        print("Failed to connect with mongodb")
 
 async def close_db():
     mongodb.client.close()

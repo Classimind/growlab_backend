@@ -14,3 +14,9 @@ pytest-asyncio
 paho-mqtt
 python-jose[cryptography]
 passlib[argon2] 
+onnx
+onnxscript
+onnxruntime-gpu 
+pillow 
+numpy 
+python-multipart

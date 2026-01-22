@@ -35,5 +35,7 @@ MONGO_PORT=27017
 ## Run the Server Locally
 ```bash
 uvicorn app.main:app --port <port_number> --reload
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
 ```
 

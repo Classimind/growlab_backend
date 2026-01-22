@@ -4,13 +4,16 @@ from app.core.config import settings
 redis = None  
 
 async def connect_redis():
-    global redis
-    redis = redis_module.from_url(
-        settings.REDIS_URI, encoding="utf-8", decode_responses=True
-    )
-    # Test connection
-    await redis.ping()
-    print("Redis connected")
+    try:
+        global redis
+        redis = redis_module.from_url(
+                settings.REDIS_URI, encoding="utf-8", decode_responses=True
+            )
+            # Test connection
+        await redis.ping()
+        print("Redis connected")
+    except:
+        print("Failed to conncet with redis")
 
 async def close_redis():
     if redis:
