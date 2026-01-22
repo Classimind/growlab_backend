@@ -8,7 +8,8 @@ COPY requirements .
 
 # Install dependencies
 RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -r requirements
+    && pip install --no-cache-dir -r requirements \
+    && pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 # Copy project files
 COPY . .
