@@ -19,7 +19,6 @@ client.on_message = on_message
 # Subscribe to a specific sensor
 sensor_id = "123"
 client.subscribe(f"/sensor/{sensor_id}")
-
 # Or subscribe to all sensors
 # client.subscribe("/sensor/+")
 
