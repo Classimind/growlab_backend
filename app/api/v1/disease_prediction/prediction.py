@@ -21,7 +21,7 @@ MODEL_DIR = BASE_DIR.parents[2] / "model"
 
 MODEL_FILES = {
     "lettuce_healthy_stressed": MODEL_DIR / "lettuce_healthystressed.onnx",
-    "lettuce_npk": MODEL_DIR / "lettuce_npk.onnx"
+    "lettuce_npk": MODEL_DIR / "best.onnx"
 }
 
 # -----------------------------------

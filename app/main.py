@@ -11,6 +11,7 @@ from app.services.mqtt_service import mqtt_service
 import asyncio
 from app.services.user_service import UserService
 from app.api.v1.disease_prediction import prediction
+from app.api.v1 import photo_upload
 from app.api.v1.disease_prediction import prediction_pth
 import logging
 loop = asyncio.get_running_loop()
@@ -62,11 +63,12 @@ app.add_middleware(
 app.include_router(plant_database.router, prefix="/plants", tags=["plants"])
 app.include_router(app_ws.router,prefix="/ws",tags=['websocket'])
 app.include_router(user.router,prefix="/users",tags=['users','register','login'])
-app.include_router(sensors.router,prefix="/sensors-history",tags=['sensors','data'])
+app.include_router(sensors.router,prefix="/sensors-history",tags=['sensors-history','data'])
 app.include_router(register_sensors.router)
 app.include_router(actuator.router)
 # app.include_router(prediction.app,prefix='/prediction',tags=['disease','predictions'])
 app.include_router(prediction_pth.app,prefix='/torch')
+app.include_router(photo_upload.app,prefix='/upload')
 # Root endpoint
 @app.get("/")
 async def root():

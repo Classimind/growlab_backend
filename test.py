@@ -1,26 +1,31 @@
 import paho.mqtt.client as mqtt
 
-# Callback when message is received
-def on_message(client, userdata, msg):
-    print(f"Received message from topic {msg.topic}: {msg.payload.decode()}")
+BROKER = "mqtt.safalstha.com.np"
+PORT = 1883
+TOPIC = "actuators/+/status"
 
-# Create client
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("✅ Connected to broker")
+        # Subscribe ONLY after successful connection
+        client.subscribe(TOPIC)
+        print(f"📡 Subscribed to {TOPIC}")
+    else:
+        print("❌ Connection failed with code", rc)
+
+def on_message(client, userdata, msg):
+    print(f"📥 Topic: {msg.topic}")
+    print(f"📦 Message: {msg.payload.decode()}")
+    print("-" * 40)
+
 client = mqtt.Client()
 
-# Set username and password
-client.username_pw_set(username="emqx_u", password="EMQemq@1172")
+client.username_pw_set("hydroponics", "hydroponics@")
 
-# Connect to EMQX broker
-client.connect("mqtt.safalstha.com.np", 1883, 60)  # replace 'localhost' with your broker IP
-
-# Assign callback
+client.on_connect = on_connect
 client.on_message = on_message
 
-# Subscribe to a specific sensor
-sensor_id = "123"
-client.subscribe(f"/sensor/{sensor_id}")
-# Or subscribe to all sensors
-# client.subscribe("/sensor/+")
+client.connect(BROKER, PORT, 60)
 
-# Start the loop
+# Start processing network traffic
 client.loop_forever()
