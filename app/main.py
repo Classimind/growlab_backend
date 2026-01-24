@@ -14,7 +14,16 @@ from app.api.v1.disease_prediction import prediction
 from app.api.v1 import photo_upload
 from app.api.v1.disease_prediction import prediction_pth
 import logging
+import os 
 loop = asyncio.get_running_loop()
+
+
+from fastapi.staticfiles import StaticFiles
+
+UPLOAD_FOLDER = "uploaded_photos"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+
 
 
 @asynccontextmanager
@@ -46,6 +55,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan,title="Hydroponics AI",description="Hydroponics AI",version="1.0.0")
 
+app.mount("/images", StaticFiles(directory=UPLOAD_FOLDER), name="images")
 
 # CORS middleware
 app.add_middleware(
