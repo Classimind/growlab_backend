@@ -32,7 +32,7 @@ def validate_extension(filename: str):
 
 def generate_filename(ext: str) -> str:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    uid = uuid.uuid4().hex[:6]
+    uid = uuid.uuid4()
     return f"{timestamp}_{uid}{ext}"
 
 # -----------------------
