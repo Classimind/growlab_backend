@@ -1,6 +1,7 @@
 from app.db.clients import mongodb
 from app.models.actuator import  ActuatorStatus,ResponseActuatorStatus
 from typing import Optional
+from fastapi import HTTPException
 
 COLLECTION_NAME="actuator_states"
 
@@ -66,4 +67,49 @@ class ActuatorStatusService:
             "limit": limit,
             "total_pages": total_pages
         }
+
+    async def get_recent_actuators_data(self, limit: int = 25):
+        """
+        Get the latest actuator status for each actuator.
+        Returns up to `limit` actuators.
+        """
+        try:
+            collection = self.get_collection()
+
+            pipeline = [
+                # Sort newest first
+                {"$sort": {"created": -1}},
+
+                # Group by actuator_id, keep the latest document
+                {
+                    "$group": {
+                        "_id": "$actuator_id",
+                        "latest": {"$first": "$$ROOT"}
+                    }
+                },
+
+                # Replace root with the latest document
+                {"$replaceRoot": {"newRoot": "$latest"}},
+
+                # Limit number of actuators returned
+                {"$limit": limit}
+            ]
+
+            cursor = collection.aggregate(pipeline)
+            actuator_data = await cursor.to_list(length=limit)
+
+            if not actuator_data:
+                raise HTTPException(status_code=404, detail="No actuator data found")
+
+            for doc in actuator_data:
+                doc["id"] = str(doc["_id"])
+                del doc["_id"]
+
+            return actuator_data
+
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Error retrieving actuator data: {str(e)}"
+            )
 

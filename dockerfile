@@ -3,6 +3,10 @@ FROM python:3.10-slim
 # Set working directory
 WORKDIR /growlab
 
+# --- Set Nepal timezone ---
+ENV TZ=Asia/Kathmandu
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
         python3-venv \

@@ -1,5 +1,5 @@
 # main.py
-from fastapi import FastAPI,Query
+from fastapi import FastAPI,Query,HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from contextlib import asynccontextmanager
@@ -10,6 +10,8 @@ from app.api.v1 import plant_database,app_ws,sensors,register_sensors,actuator
 from app.services.mqtt_service import mqtt_service
 import asyncio
 from app.services.user_service import UserService
+from app.services.actuator_status_service import ActuatorStatusService
+from app.services.sensor_service import CollectSensorValueService
 from app.api.v1.disease_prediction import prediction
 from app.api.v1 import photo_upload
 from app.api.v1.disease_prediction import prediction_pth
@@ -81,9 +83,31 @@ app.include_router(actuator.router)
 app.include_router(prediction_pth.app,prefix='/torch')
 app.include_router(photo_upload.app,prefix='/upload')
 # Root endpoint
+
 @app.get("/")
 async def root():
-    return {"message": "Hydroponics AI"}
+    try:
+        # Initialize your service classes
+        sensor_service = CollectSensorValueService()
+        actuator_service = ActuatorStatusService()
+
+        # Fetch latest data
+        latest_sensors = await sensor_service.get_recent_sensors_data()
+        latest_actuators = await actuator_service.get_recent_actuators_data()
+
+        return {
+            "latest_sensors": latest_sensors,
+            "latest_actuators": latest_actuators
+        }
+
+    except HTTPException as e:
+        # Pass through HTTP errors
+        raise e
+    except Exception as e:
+        # Catch-all for unexpected errors
+        raise HTTPException(status_code=500, detail=f"Error fetching device data: {str(e)}")
+
+
 
 @app.get("/token/")
 def get_token(

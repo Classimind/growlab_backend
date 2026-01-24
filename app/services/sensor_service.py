@@ -90,6 +90,47 @@ class CollectSensorValueService:
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error retrieving sensor data: {str(e)}")
 
+    async def get_recent_sensors_data(self):
+        try:
+            collection = self.get_collection()
+
+            pipeline = [
+                # Sort newest first
+                {"$sort": {"timestamp": -1}},
+
+                # Group by sensor_id and take the latest document
+                {
+                    "$group": {
+                        "_id": "$sensor_id",
+                        "latest": {"$first": "$$ROOT"}
+                    }
+                },
+
+                # Replace root with latest document
+                {"$replaceRoot": {"newRoot": "$latest"}},
+
+                # Optional: limit how many sensors you want
+                {"$limit": 25}
+            ]
+
+            cursor = collection.aggregate(pipeline)
+            sensor_data = await cursor.to_list(length=25)
+
+            if not sensor_data:
+                raise HTTPException(status_code=404, detail="Sensor data not found")
+
+            for doc in sensor_data:
+                doc["id"] = str(doc["_id"])
+                del doc["_id"]
+
+            return sensor_data
+
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Error retrieving sensor data: {str(e)}"
+            )
+
 
 
 class SensorService:
