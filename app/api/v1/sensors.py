@@ -4,7 +4,7 @@ from typing import List
 from app.models.sensors import Sensor
 from app.services.ws_connection_manager_sensor import sensormanager
 from app.services.sensor_service import CollectSensorValueService
-
+import asyncio
 
 sensor_service = CollectSensorValueService()
 
@@ -18,13 +18,25 @@ async def create_sensor(sensor: Sensor):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error saving sensor: {str(e)}")
 
+
 @router.post("/collect/batch", response_model=List[Sensor])
-async def create_sensors_batch(sensor: List[Sensor]):
+async def create_sensors_batch(sensors: List[Sensor]):
     try:
-        await sensor_service.add_sensor_values_batch(sensor)
-        return sensor
+        # Save all sensors in batch
+        await sensor_service.add_sensor_values_batch(sensors)
+
+        # Send all updates concurrently
+        tasks = [
+            sensormanager.send_update(sensor.sensor_id, sensor.model_dump())
+            for sensor in sensors
+        ]
+        await asyncio.gather(*tasks)
+
+        # Return the saved sensors
+        return sensors
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error saving sensor: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error saving sensors: {str(e)}")
+
 
 
 @router.get("/latest/{sensor_id}",response_model=Sensor)
