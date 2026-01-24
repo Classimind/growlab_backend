@@ -90,15 +90,18 @@ class CollectSensorValueService:
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error retrieving sensor data: {str(e)}")
 
-    async def get_recent_sensors_data(self):
+    async def get_recent_sensors_data(self, limit: int = 25):
+        """
+        Get latest sensor readings per sensor_id, including the sensor name
+        """
         try:
-            collection = self.get_collection()
+            collection = self.get_collection()  # sensors_values collection
 
             pipeline = [
                 # Sort newest first
-                {"$sort": {"timestamp": -1}},
+                {"$sort": {"created": -1}},
 
-                # Group by sensor_id and take the latest document
+                # Group by sensor_id to get latest reading per sensor
                 {
                     "$group": {
                         "_id": "$sensor_id",
@@ -106,21 +109,51 @@ class CollectSensorValueService:
                     }
                 },
 
-                # Replace root with latest document
+                # Replace root with the latest reading
                 {"$replaceRoot": {"newRoot": "$latest"}},
 
-                # Optional: limit how many sensors you want
-                {"$limit": 25}
+                # Lookup sensor name from `sensors` collection using ObjectId conversion
+                {
+                    "$lookup": {
+                        "from": "sensors",
+                        "let": {"sensor_id_str": "$sensor_id"},  # pass the string
+                        "pipeline": [
+                            {
+                                "$match": {
+                                    "$expr": {
+                                        "$eq": ["$_id", {"$toObjectId": "$$sensor_id_str"}]
+                                    }
+                                }
+                            }
+                        ],
+                        "as": "sensor_info"
+                    }
+                },
+
+                # Unwind the array from lookup
+                {"$unwind": {"path": "$sensor_info", "preserveNullAndEmptyArrays": True}},
+
+                # Add 'name' field; fallback to None if not found
+                {
+                    "$addFields": {
+                        "name": {"$ifNull": ["$sensor_info.sensor_name", None]}
+                    }
+                },
+
+                # Optionally limit the number of sensors
+                {"$limit": limit},
+
+                # Remove the lookup array field
+                {"$project": {"sensor_info": 0}}
             ]
 
             cursor = collection.aggregate(pipeline)
-            sensor_data = await cursor.to_list(length=25)
-
-            if not sensor_data:
-                raise HTTPException(status_code=404, detail="Sensor data not found")
+            sensor_data = await cursor.to_list(length=limit)
 
             for doc in sensor_data:
                 doc["id"] = str(doc["_id"])
+                doc["sensor_id"] = str(doc["sensor_id"])
+                # Remove _id since we added id
                 del doc["_id"]
 
             return sensor_data
@@ -128,7 +161,7 @@ class CollectSensorValueService:
         except Exception as e:
             raise HTTPException(
                 status_code=500,
-                detail=f"Error retrieving sensor data: {str(e)}"
+                detail=f"Error retrieving sensor data with names: {str(e)}"
             )
 
 

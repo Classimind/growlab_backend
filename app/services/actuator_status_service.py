@@ -68,13 +68,14 @@ class ActuatorStatusService:
             "total_pages": total_pages
         }
 
+
     async def get_recent_actuators_data(self, limit: int = 25):
         """
-        Get the latest actuator status for each actuator.
+        Get the latest actuator status for each actuator, including actuator name.
         Returns up to `limit` actuators.
         """
         try:
-            collection = self.get_collection()
+            collection = self.get_collection()  # actuator values collection
 
             pipeline = [
                 # Sort newest first
@@ -91,8 +92,39 @@ class ActuatorStatusService:
                 # Replace root with the latest document
                 {"$replaceRoot": {"newRoot": "$latest"}},
 
+                # Lookup actuator name from `actuators` collection using ObjectId
+                {
+                    "$lookup": {
+                        "from": "actuators",
+                        "let": {"actuator_id_str": "$actuator_id"},
+                        "pipeline": [
+                            {
+                                "$match": {
+                                    "$expr": {
+                                        "$eq": ["$_id", {"$toObjectId": "$$actuator_id_str"}]
+                                    }
+                                }
+                            }
+                        ],
+                        "as": "actuator_info"
+                    }
+                },
+
+                # Unwind the array from lookup
+                {"$unwind": {"path": "$actuator_info", "preserveNullAndEmptyArrays": True}},
+
+                # Add 'name' field; fallback to None if not found
+                {
+                    "$addFields": {
+                        "name": {"$ifNull": ["$actuator_info.actuator_name", None]}
+                    }
+                },
+
                 # Limit number of actuators returned
-                {"$limit": limit}
+                {"$limit": limit},
+
+                # Remove the lookup array field
+                {"$project": {"actuator_info": 0}}
             ]
 
             cursor = collection.aggregate(pipeline)
@@ -103,6 +135,8 @@ class ActuatorStatusService:
 
             for doc in actuator_data:
                 doc["id"] = str(doc["_id"])
+                doc["actuator_id"] = str(doc["actuator_id"])
+                # Remove _id since we added id
                 del doc["_id"]
 
             return actuator_data
@@ -112,4 +146,3 @@ class ActuatorStatusService:
                 status_code=500,
                 detail=f"Error retrieving actuator data: {str(e)}"
             )
-
