@@ -58,6 +58,9 @@ import io
 from PIL import Image
 import torch
 from torchvision import transforms
+import os
+from livekit import api
+from app.core.config import settings
 
 def preprocess_image(image_bytes: bytes, normalize: bool = False,
                      mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)) -> torch.Tensor:
@@ -214,3 +217,17 @@ def postprocess_output(
         results['top_predictions'].append(pred)
     
     return results
+
+
+
+
+
+def generate_token(room_name: str,name="user",full_name="Unknown user"):
+    token = (
+        api.AccessToken(settings.LIVEKIT_API_KEY, settings.LIVEKIT_API_SECRET)
+        .with_identity(name)
+        .with_name(full_name)
+        .with_grants(api.VideoGrants(room_join=True, room=room_name))
+        .to_jwt()
+    )
+    return token

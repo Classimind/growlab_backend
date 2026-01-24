@@ -1,5 +1,5 @@
 # main.py
-from fastapi import FastAPI
+from fastapi import FastAPI,Query
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from contextlib import asynccontextmanager
@@ -13,6 +13,7 @@ from app.services.user_service import UserService
 from app.api.v1.disease_prediction import prediction
 from app.api.v1 import photo_upload
 from app.api.v1.disease_prediction import prediction_pth
+from app.utilities.utilities import generate_token
 import logging
 import os 
 loop = asyncio.get_running_loop()
@@ -83,3 +84,16 @@ app.include_router(photo_upload.app,prefix='/upload')
 @app.get("/")
 async def root():
     return {"message": "Hydroponics AI"}
+
+@app.get("/token/")
+def get_token(
+    room_name: str = Query(..., description="Room to join"),
+    name: str = Query("user", description="Identity name"),
+    full_name: str = Query("Unknown user", description="Full display name"),
+):
+    jwt_token = generate_token(room_name, name, full_name)
+    return {"token": jwt_token}
+
+
+
+

@@ -20,3 +20,4 @@ onnxruntime-gpu
 pillow 
 numpy 
 python-multipart
+livekit-api 
