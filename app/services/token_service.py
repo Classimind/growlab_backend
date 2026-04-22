@@ -3,6 +3,7 @@ from typing import Optional
 from jose import JWTError, jwt
 import os
 from dotenv import load_dotenv
+from fastapi import Depends, HTTPException, status
 
 # Load environment variables
 load_dotenv()
@@ -40,6 +41,32 @@ def create_refresh_token(data: dict, expires_delta: Optional[timedelta] = None) 
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
+
+def get_current_user(token: str = Depends()):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid or expired token",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    try:
+        payload = decode_token(token)
+        user_id: str = payload.get("sub")
+        role: str = payload.get("role")
+
+        if user_id is None:
+            raise credentials_exception
+
+        return {
+            "user_id": user_id,
+            "role": role
+        }
+
+    except JWTError:
+        raise credentials_exception
+
+
+
 # -------------------------
 # Token Decoding Function
 # -------------------------
@@ -54,5 +81,18 @@ def decode_token(token: str) -> Optional[dict]:
     except JWTError:
         return None
 
+
+def generate_tokens( user: dict):
+        payload = {
+            "user_id": str(user["_id"]),
+            "email": user["email"],
+            "role": user["role"]  # string only
+        }
+
+        return {
+            "access_token": create_access_token(payload),
+            "refresh_token": create_refresh_token(payload),
+            "token_type": "bearer"
+        }
 
 

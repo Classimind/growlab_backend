@@ -3,6 +3,8 @@ from passlib.context import CryptContext
 from pymongo.errors import DuplicateKeyError
 from typing import Optional
 from app.db.clients import mongodb
+from datetime import datetime, timezone, timedelta
+
 
 USER_COLLECTION = "users"
 
@@ -47,7 +49,8 @@ class UserService:
 
         data = user.model_dump()
         try:
-            await self.collection.insert_one(user.model_dump())
+          result =   await self.collection.insert_one(user.model_dump())
+          data['_id']=result.inserted_id
         except DuplicateKeyError as e:
             raise ValueError("User with this email or OAuth ID already exists") from e
         except:
@@ -69,23 +72,70 @@ class UserService:
             "provider": provider,
             "oauth.provider_user_id": provider_user_id
         })
+    
+    def ensure_utc(self,dt):
+        if dt and dt.tzinfo is None:
+            return dt.replace(tzinfo=timezone.utc)
+        return dt
 
     # -------------------------
     # Authentication
     # -------------------------
     async def authenticate_email_user(self, email: str, password: str) -> Optional[dict]:
-        """
-        Authenticate a user with email and password.
-        Returns user data without password if successful, else None.
-        """
+
         user = await self.find_user_by_email(email)
+
         if not user:
             return None
+
+        #  CHECK ACCOUNT LOCK
+        locked_until = self.ensure_utc(user.get("locked_until"))
+
+        if locked_until and locked_until > datetime.now(timezone.utc):
+            raise Exception("Account is locked")
+
+    
+        #  VERIFY PASSWORD
         if not self.verify_password(password, user.get("password", "")):
+
+            await self.handle_failed_login(user["_id"])
             return None
-        # Remove password before returning
+
+        #  RESET SECURITY STATE
+        await self.reset_failed_attempts(user["_id"])
+
+        # Remove sensitive data
         user.pop("password", None)
+
         return user
+    
+    async def handle_failed_login(self, user_id: str):
+
+        user = await self.collection.find_one({"_id": user_id})
+
+        if not user:
+            return
+
+        # increment failed attempts
+        attempts = user.get("failed_login_attempts", 0) + 1
+
+        update = {
+            "failed_login_attempts": attempts
+        }
+
+        # lock account after threshold
+        MAX_ATTEMPTS = 10
+        LOCK_TIME_MINUTES = 30
+
+        if attempts >= MAX_ATTEMPTS:
+            update["locked_until"] = datetime.now(timezone.utc) + timedelta(
+                minutes=LOCK_TIME_MINUTES
+            )
+
+        await self.collection.update_one(
+            {"_id": user_id},
+            {"$set": update}
+        )
 
     async def authenticate_oauth_user(self, provider: Provider, provider_user_id: str, access_token: str) -> Optional[dict]:
         """
@@ -100,4 +150,18 @@ class UserService:
             user["oauth"].pop("access_token", None)
             user["oauth"].pop("refresh_token", None)
         return user
+    
+    async def reset_failed_attempts(self, user_id: str):
+
+        await self.collection.update_one(
+            {"_id": user_id},
+            {
+                "$set": {
+                    "failed_login_attempts": 0,
+                    "locked_until": None,
+                    "last_login": datetime.now(timezone.utc)
+                }
+            }
+        )
+
 
