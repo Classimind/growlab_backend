@@ -121,7 +121,19 @@ class CollectSensorValueService:
                             {
                                 "$match": {
                                     "$expr": {
-                                        "$eq": ["$_id", {"$toObjectId": "$$sensor_id_str"}]
+                                        "$eq": ["$_id", 
+                                                
+                                                # {"$toObjectId": "$$sensor_id_str"}
+                                                 {
+                                    "$convert": {
+                                        "input": "$$sensor_id_str",
+                                        "to": "objectId",
+                                        "onError": None,
+                                        "onNull": None
+                                    }
+                                }
+                                                
+                                                ]
                                     }
                                 }
                             }
@@ -154,8 +166,10 @@ class CollectSensorValueService:
                 doc["id"] = str(doc["_id"])
                 doc["sensor_id"] = str(doc["sensor_id"])
                 # Remove _id since we added id
-                del doc["_id"]
-
+                # doc['_id']= str(doc["_id"])
+                del doc['_id']
+                # doc['created'] = str(doc['created'].strftime("%Y-%m-%d %H:%M:%S"))
+            print(sensor_data)
             return sensor_data
 
         except Exception as e:

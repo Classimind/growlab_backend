@@ -93,8 +93,9 @@ async def root():
 
         # Fetch latest data
         latest_sensors = await sensor_service.get_recent_sensors_data()
+        # print(latest_sensors)
         latest_actuators = await actuator_service.get_recent_actuators_data()
-
+        print(latest_sensors)
         return {
             "latest_sensors": latest_sensors,
             "latest_actuators": latest_actuators
