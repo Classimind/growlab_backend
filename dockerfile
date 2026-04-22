@@ -1,39 +1,31 @@
 FROM python:3.10-slim
 
-# Set working directory
 WORKDIR /growlab
 
-# --- Set Nepal timezone ---
+# Set timezone
 ENV TZ=Asia/Kathmandu
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Install system dependencies
+# Install system deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        python3-venv \
-        build-essential \
-        wget \
-        git \
+    build-essential \
+    wget \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a virtual environment
-RUN python -m venv /opt/venv
+# Copy requirements first (for caching)
+COPY requirements.txt .
 
-# Activate venv and upgrade pip
-ENV PATH="/opt/venv/bin:$PATH"
-
-# Copy requirements
-COPY requirements .
-
-# Install Python dependencies inside venv
+# Install dependencies
 RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -r requirements \
+    && pip install --no-cache-dir -r requirements.txt \
     && pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
-# Copy project files
+# Copy app
 COPY . .
 
-# Expose FastAPI port
+# Expose port
 EXPOSE 8989
 
-# Command to run FastAPI with hot reload inside the venv
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8989", "--reload"]
+# Run FastAPI
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8989"]
