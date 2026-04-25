@@ -26,7 +26,7 @@ REFRESH_TOKEN_EXPIRE_DAYS = 30          # 30 days
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
-    print(token)
+
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Invalid or expired token",
@@ -37,7 +37,6 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
         payload = decode_token(token) 
         user_id: str = payload.get("user_id")
         role: str = payload.get("role")
-
         if user_id is None:
             raise credentials_exception
 
@@ -110,6 +109,7 @@ def decode_token(token: str) -> dict:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except ExpiredSignatureError:
+        
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token has expired"

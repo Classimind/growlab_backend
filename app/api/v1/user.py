@@ -26,7 +26,7 @@ async def refresh_token(data: RefreshRequest):
     
     #  create new access token
     new_access_token,expire = create_access_token({
-        "_id": user_id,
+        "user_id": user_id,
         "role": role,
         "email":email
     })

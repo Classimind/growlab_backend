@@ -20,4 +20,5 @@ onnxruntime-gpu
 pillow 
 numpy 
 python-multipart
-livekit-api 
+livekit-api
+tzdata
