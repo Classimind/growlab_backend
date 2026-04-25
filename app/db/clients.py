@@ -1,20 +1,26 @@
-import motor.motor_asyncio
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from app.core.config import settings
 
 class MongoDB:
-    client: motor.motor_asyncio.AsyncIOMotorClient = None
-    db = None
+    client: AsyncIOMotorClient | None = None
+    db: AsyncIOMotorDatabase | None = None
+
 
 mongodb = MongoDB()
 
 async def connect_db():
-    try:
-        mongodb.client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGO_URI)
-        mongodb.db = mongodb.client[settings.MONGO_DB_NAME]
-        print("MongoDB connected")
-    except:
-        print("Failed to connect with mongodb")
+    mongodb.client = AsyncIOMotorClient(settings.MONGO_URI)
+    mongodb.db = mongodb.client[settings.MONGO_DB_NAME]
+    print("MongoDB connected")
+
 
 async def close_db():
-    mongodb.client.close()
+    if mongodb.client:
+        mongodb.client.close()
     print("MongoDB disconnected")
+
+
+def get_db() -> AsyncIOMotorDatabase:
+    if mongodb.db is None:
+        raise RuntimeError("Database not initialized. Did you forget startup event?")
+    return mongodb.db

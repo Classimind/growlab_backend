@@ -15,6 +15,7 @@ from app.services.sensor_service import CollectSensorValueService
 from app.api.v1.disease_prediction import prediction
 from app.api.v1 import photo_upload
 from app.api.v1.disease_prediction import prediction_pth
+from app.api.v1.farm import farm_router
 from app.utilities.utilities import generate_token
 import logging
 import os 
@@ -76,6 +77,7 @@ app.add_middleware(
 app.include_router(plant_database.router, prefix="/plants", tags=["plants"])
 app.include_router(app_ws.router,prefix="/ws",tags=['websocket'])
 app.include_router(user.router,prefix="/users",tags=['users','register','login'])
+app.include_router(farm_router,prefix='/labs',tags=['farm','lab'])
 app.include_router(sensors.router,prefix="/sensors-history",tags=['sensors-history','data'])
 app.include_router(register_sensors.router)
 app.include_router(actuator.router)

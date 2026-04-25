@@ -4,6 +4,9 @@ from jose import JWTError, jwt
 import os
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from jose import JWTError
 
 # Load environment variables
 load_dotenv()
@@ -17,9 +20,35 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60        # 1 hour
 REFRESH_TOKEN_EXPIRE_DAYS = 30          # 30 days
 
-# -------------------------
-# Token Creation Functions
-# -------------------------
+
+# "Take token from Authorization: Bearer <token>"
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid or expired token",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    try:
+        payload = decode_token(token) 
+
+        user_id: str = payload.get("sub")
+        role: str = payload.get("role")
+
+        if user_id is None:
+            raise credentials_exception
+
+        return {
+            "user_id": user_id,
+            "role": role
+        }
+
+    except JWTError:
+        raise credentials_exception
+
+
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     """
@@ -42,28 +71,28 @@ def create_refresh_token(data: dict, expires_delta: Optional[timedelta] = None) 
 
 
 
-def get_current_user(token: str = Depends()):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Invalid or expired token",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+# def get_current_user(token: str = Depends()):
+#     credentials_exception = HTTPException(
+#         status_code=status.HTTP_401_UNAUTHORIZED,
+#         detail="Invalid or expired token",
+#         headers={"WWW-Authenticate": "Bearer"},
+#     )
 
-    try:
-        payload = decode_token(token)
-        user_id: str = payload.get("sub")
-        role: str = payload.get("role")
+#     try:
+#         payload = decode_token(token)
+#         user_id: str = payload.get("sub")
+#         role: str = payload.get("role")
 
-        if user_id is None:
-            raise credentials_exception
+#         if user_id is None:
+#             raise credentials_exception
 
-        return {
-            "user_id": user_id,
-            "role": role
-        }
+#         return {
+#             "user_id": user_id,
+#             "role": role
+#         }
 
-    except JWTError:
-        raise credentials_exception
+#     except JWTError:
+#         raise credentials_exception
 
 
 
