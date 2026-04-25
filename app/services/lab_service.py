@@ -34,10 +34,10 @@ class LabService:
 
         lab_dict = lab.model_dump()
 
-        #  timestamp
+        # timestamp
         lab_dict["created_at"] = datetime.now(timezone.utc)
 
-        #  convert creator to ObjectId
+        # convert creator to ObjectId
         if lab_dict.get("created_by"):
             lab_dict["created_by"] = ObjectId(lab_dict["created_by"])
 
@@ -47,14 +47,27 @@ class LabService:
                 if isinstance(emp.get("user_id"), str):
                     emp["user_id"] = ObjectId(emp["user_id"])
 
+        # insert
         result = await self.collection.insert_one(lab_dict)
+
+        created_lab = await self.collection.find_one({"_id": result.inserted_id})
+
+        # convert ObjectId → str for API response
+        created_lab["id"] = str(created_lab["_id"])
+        created_lab["_id"] = str(created_lab["_id"])
+
+        if created_lab.get("created_by"):
+            created_lab["created_by"] = str(created_lab["created_by"])
+
+        if created_lab.get("employees"):
+            for emp in created_lab["employees"]:
+                emp["user_id"] = str(emp.get("user_id"))
 
         return {
             "success": True,
-            "lab_id": str(result.inserted_id),
-            "message": "Lab created successfully"
+            "message": "Lab created successfully",
+            "lab": created_lab   
         }
-
 
     async def get_all_labs(self) -> List[Dict[str, Any]]:
 
