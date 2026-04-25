@@ -1,4 +1,4 @@
-from pydantic import BaseModel,Field
+from pydantic import BaseModel,Field,field_validator
 from datetime import datetime,timezone
 from typing import Optional,List
 from app.models.preference import PreferenceMode,TargetPlant
@@ -21,3 +21,17 @@ class Lab(BaseModel):
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )
+
+    @field_validator("target_plant", mode="before")
+    @classmethod
+    def normalize_target_plant(cls, v):
+        if isinstance(v, str):
+            return v.strip().lower()
+        return v
+
+    @field_validator("preference", mode="before")
+    @classmethod
+    def normalize_preference(cls, v):
+        if isinstance(v, str):
+            return v.strip().lower()
+        return v
