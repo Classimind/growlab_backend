@@ -26,12 +26,15 @@ class Lab(BaseModel):
     @classmethod
     def normalize_target_plant(cls, v):
         if isinstance(v, str):
-            return v.strip().lower()
+            v = v.strip().lower()
+            return TargetPlant(v)   
         return v
+
 
     @field_validator("preference", mode="before")
     @classmethod
     def normalize_preference(cls, v):
         if isinstance(v, str):
-            return v.strip().lower()
+            v = v.strip().lower()
+            return PreferenceMode(v) 
         return v
