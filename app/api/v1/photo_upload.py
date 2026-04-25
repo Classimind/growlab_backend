@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from pathlib import Path
 from datetime import datetime
 import uuid
+from app.core.config import KTM_TZ
 
 app = APIRouter()
 
@@ -31,7 +32,7 @@ def validate_extension(filename: str):
 
 
 def generate_filename(ext: str) -> str:
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    timestamp = datetime.now(KTM_TZ).strftime("%Y%m%d_%H%M%S")
     uid = uuid.uuid4()
     return f"{timestamp}_{uid}{ext}"
 

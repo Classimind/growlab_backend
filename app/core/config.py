@@ -3,6 +3,10 @@ from typing import List
 import os
 from pydantic import Field
 
+from zoneinfo import ZoneInfo
+
+KTM_TZ = ZoneInfo("Asia/Kathmandu")
+
 class Settings(BaseSettings):
     # MongoDB configuration
     MONGO_USER: str
