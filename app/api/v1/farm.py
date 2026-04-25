@@ -8,7 +8,7 @@ from app.db.clients import get_db
 from app.core.dependencies import get_current_user
 from app.core.roles import FarmRole,Role
 
-farm_router = APIRouter(prefix="/labs", tags=["Labs"])
+farm_router = APIRouter()
 
 
 
@@ -27,7 +27,6 @@ def require_roles(allowed_roles: list[Role,FarmRole]):
     return dependency
 
 
-# ---------------- ROUTES ----------------
 
 @farm_router.post("/")
 async def create_lab(
