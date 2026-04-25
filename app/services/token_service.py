@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, status
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError
+from jose import JWTError, ExpiredSignatureError
 
 # Load environment variables
 load_dotenv()
@@ -100,15 +100,25 @@ def create_refresh_token(data: dict, expires_delta: Optional[timedelta] = None) 
 # Token Decoding Function
 # -------------------------
 
-def decode_token(token: str) -> Optional[dict]:
+def decode_token(token: str) -> dict:
     """
-    Decode a JWT token (access or refresh). Returns payload if valid, None if invalid/expired.
+    Decode a JWT token (access or refresh).
+    Raises HTTPException if invalid or expired.
     """
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
+    except ExpiredSignatureError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token has expired"
+        )
+
     except JWTError:
-        return None
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token"
+        )
 
 
 def generate_tokens( user: dict):
