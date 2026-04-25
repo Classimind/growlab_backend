@@ -15,7 +15,7 @@ class Lab(BaseModel):
     description: Optional[str] = Field(default="Hydroponics optimization lab")
     target_plant: TargetPlant = Field(default=TargetPlant.LETTUCE)
     preference: PreferenceMode = Field(default=PreferenceMode.BALANCED)
-    created_by: str
+    created_by: str = Field(default=None)
     employees: List[LabEmployee] = Field(default_factory=list)
     status: bool = Field(default=False)
     created_at: datetime = Field(

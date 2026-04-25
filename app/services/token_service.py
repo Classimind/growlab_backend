@@ -22,9 +22,10 @@ REFRESH_TOKEN_EXPIRE_DAYS = 30          # 30 days
 
 
 # "Take token from Authorization: Bearer <token>"
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
+    print(token)
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Invalid or expired token",
@@ -33,8 +34,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 
     try:
         payload = decode_token(token) 
-
-        user_id: str = payload.get("sub")
+        user_id: str = payload.get("user_id")
         role: str = payload.get("role")
 
         if user_id is None:
@@ -50,14 +50,14 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 
 
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> tuple:
     """
     Create a JWT access token with optional expiration.
     """
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM),expire
 
 
 def create_refresh_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
@@ -115,13 +115,14 @@ def generate_tokens( user: dict):
         payload = {
             "user_id": str(user["_id"]),
             "email": user["email"],
-            "role": user["role"]  # string only
+            "role": user["role"] 
         }
-
+        access_token,expire= create_access_token(payload)
         return {
-            "access_token": create_access_token(payload),
+            "access_token": access_token,
             "refresh_token": create_refresh_token(payload),
-            "token_type": "bearer"
+            "token_type": "bearer",
+            "expire":expire.strftime("%Y-%m-%d %H:%M:%S")
         }
 
 
