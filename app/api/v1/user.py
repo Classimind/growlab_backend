@@ -25,7 +25,7 @@ async def refresh_token(data: RefreshRequest):
         raise HTTPException(status_code=401, detail="Invalid token payload")
     
     #  create new access token
-    new_access_token = create_access_token({
+    new_access_token,expire = create_access_token({
         "_id": user_id,
         "role": role,
         "email":email
@@ -33,7 +33,8 @@ async def refresh_token(data: RefreshRequest):
 
     return {
         "access_token": new_access_token,
-        "token_type": "bearer"
+        "token_type": "bearer",
+        'expire':expire.strftime("%Y-%m-%d %H:%M:%S")
     }
 
 
