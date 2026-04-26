@@ -7,23 +7,40 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from app.models.farm import Lab
 
 
+from datetime import datetime
+
 def serialize_lab(lab: dict) -> dict:
     """
     Convert MongoDB document into JSON-safe dict
     Handles:
     - ObjectId → str
     - datetime → ISO format
+    - nested user_id fields
+    - employees list serialization
     """
 
+    # _id
     if "_id" in lab:
         lab["_id"] = str(lab["_id"])
 
+    # created_by (user_id)
+    if "created_by" in lab and lab["created_by"] is not None:
+        lab["created_by"] = str(lab["created_by"])
+
+    # employees (nested list)
+    if "employees" in lab and isinstance(lab["employees"], list):
+        for emp in lab["employees"]:
+            if isinstance(emp, dict):
+                # user_id inside employee
+                if "user_id" in emp and emp["user_id"] is not None:
+                    emp["user_id"] = str(emp["user_id"])
+
+    # datetime fields
     for key, value in lab.items():
         if isinstance(value, datetime):
             lab[key] = value.isoformat()
 
     return lab
-
 
 class LabService:
 
@@ -53,7 +70,6 @@ class LabService:
         created_lab = await self.collection.find_one({"_id": result.inserted_id})
 
         # convert ObjectId → str for API response
-        created_lab["id"] = str(created_lab["_id"])
         created_lab["_id"] = str(created_lab["_id"])
 
         if created_lab.get("created_by"):
@@ -69,10 +85,10 @@ class LabService:
             "lab": created_lab   
         }
 
-    async def get_all_labs(self) -> List[Dict[str, Any]]:
+    async def get_all_labs(self, query: Dict[str, Any]) -> List[Dict[str, Any]]:
 
         labs = []
-        cursor = self.collection.find()
+        cursor = self.collection.find(query)
 
         async for lab in cursor:
             labs.append(serialize_lab(lab))

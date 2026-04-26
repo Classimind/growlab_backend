@@ -26,6 +26,33 @@ def require_permission(permission: str):
     return checker
 
 
+def require_roles(allowed_roles: list):
+    def dependency(user=Depends(get_current_user)):
+        if user['role'] not in allowed_roles:
+            raise HTTPException(
+                status_code=403,
+                detail="Permission denied"
+            )
+        return user
+    return dependency
+
+
+def can_access_farm(user, lab, action: str = "read") -> bool:
+    user_id = str(user["user_id"])
+
+    if lab.created_by == user_id:
+        return action in ROLE_PERMISSIONS[FarmRole.OWNER]
+
+    for emp in lab.employees:
+        if str(emp.user_id) == user_id:
+
+            if emp.permissions:
+                return action in emp.permissions
+
+            return action in ROLE_PERMISSIONS.get(emp.role, [])
+
+    return False
+
 
 def require_farm_permission(farm_id: str, permission: str):
 

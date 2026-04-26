@@ -7,25 +7,13 @@ from app.db.clients import get_db
 
 from app.core.dependencies import get_current_user
 from app.core.roles import FarmRole,Role
-
+from app.core.dependencies import require_roles
 farm_router = APIRouter()
 
 
 
 def get_lab_service(db: AsyncIOMotorDatabase = Depends(get_db)) -> LabService:
     return LabService(db)
-
-
-def require_roles(allowed_roles: list):
-    def dependency(user=Depends(get_current_user)):
-        if user['role'] not in allowed_roles:
-            raise HTTPException(
-                status_code=403,
-                detail="Permission denied"
-            )
-        return user
-    return dependency
-
 
 
 @farm_router.post("/")
@@ -42,9 +30,15 @@ async def create_lab(
 @farm_router.get("/")
 async def get_all_labs(
     service: LabService = Depends(get_lab_service),
-    user=Depends(get_current_user)
-):
-    return await service.get_all_labs()
+    user=Depends(get_current_user)):
+    user_id = str(user["user_id"])
+    query = {
+        "$or": [
+            {"created_by": user_id},
+            {"employees.user_id": user_id}
+        ]
+    }
+    return await service.get_all_labs(query)
 
 
 @farm_router.get("/{lab_id}")

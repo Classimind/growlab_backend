@@ -19,7 +19,7 @@ class DeviceType(str, Enum):
 class ResponseSensor(BaseModel):
     id:str
     sensor_name: str
-    farm_id: str
+    lab_id: str
     unit: str
     sensor_type: DeviceType
     range: Optional[Tuple[float, float]] = Field(
@@ -46,7 +46,7 @@ class ResponseSensor(BaseModel):
 
 class RegisterSensor(BaseModel):
     sensor_name: str
-    farm_id: str
+    lab_id: str
     unit: str
     sensor_type: DeviceType
     range: Optional[Tuple[float, float]] = Field(

@@ -22,30 +22,24 @@ ROLE_PERMISSIONS = {
 
 
 
-FARM_ROLE_PERMISSIONS = {
-    FarmRole.VIEWER: [
-        "read_farm"
-    ],
-
-    FarmRole.STAFF: [
-        "read_farm",
-        "write_farm"
-    ],
-
-    FarmRole.MANAGER: [
-        "read_farm",
-        "write_farm",
-        "manage_tasks"
+ROLE_PERMISSIONS = {
+    FarmRole.OWNER: [
+        "read", "create", "update", "delete", "manage_farm", "manage_users"
     ],
 
     FarmRole.ADMIN: [
-        "read_farm",
-        "write_farm",
-        "manage_users",
-        "manage_farm"
+        "read", "create", "update", "delete", "manage_users"
     ],
 
-    FarmRole.OWNER: [
-        "all"
+    FarmRole.MANAGER: [
+        "read", "create", "update", "manage_sensors"
+    ],
+
+    FarmRole.STAFF: [
+        "read", "create"
+    ],
+
+    FarmRole.VIEWER: [
+        "read"
     ]
 }

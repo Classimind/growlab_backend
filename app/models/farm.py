@@ -2,12 +2,14 @@ from pydantic import BaseModel,Field,field_validator
 from datetime import datetime,timezone
 from typing import Optional,List
 from app.models.preference import PreferenceMode,TargetPlant
-from app.core.roles import Role
+from app.core.roles import FarmRole
 
 
 class LabEmployee(BaseModel):
     user_id: str
-    role: Role
+    role: FarmRole = FarmRole.STAFF
+    permissions: Optional[List[str]] = []
+
 
 class Lab(BaseModel):
     id: Optional[str] = Field(default=None)
