@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field,field_validator
 from datetime import datetime, timezone
 from enum import Enum
 from typing import Optional,Tuple,Any
+from app.core.config import KTM_TZ
 
 class Sensor(BaseModel):
     sensor_id:str
@@ -26,7 +27,8 @@ class ResponseSensor(BaseModel):
         None,
         description="(min, max) measurable values for analog sensors"
     )
-    created: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_by: str
+    created: datetime = Field(default_factory=lambda: datetime.now(KTM_TZ))
 
     @field_validator("range")
     @classmethod
@@ -49,6 +51,7 @@ class RegisterSensor(BaseModel):
     lab_id: str
     unit: str
     sensor_type: DeviceType
+    created_by: str= Field(default="system", description="User who created the sensor")
     range: Optional[Tuple[float, float]] = Field(
         None,
         description="(min, max) measurable values for analog sensors"

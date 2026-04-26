@@ -2,6 +2,7 @@ from fastapi import Depends, HTTPException
 from app.core.permissions import ROLE_PERMISSIONS,FARM_ROLE_PERMISSIONS
 from app.core.roles import Role,FarmRole
 from app.services.token_service import get_current_user
+from app.models.farm import Lab
 
 def require_permission(permission: str):
 
@@ -37,19 +38,16 @@ def require_roles(allowed_roles: list):
     return dependency
 
 
-def can_access_farm(user, lab, action: str = "read") -> bool:
+def can_access_farm(user, lab:Lab, action: str = "read") -> bool:
     user_id = str(user["user_id"])
-
-    if lab.created_by == user_id:
-        return action in ROLE_PERMISSIONS[FarmRole.OWNER]
-
+    if lab['created_by'] == user_id:
+        return action in FARM_ROLE_PERMISSIONS[FarmRole.OWNER]
     for emp in lab.employees:
         if str(emp.user_id) == user_id:
-
             if emp.permissions:
                 return action in emp.permissions
 
-            return action in ROLE_PERMISSIONS.get(emp.role, [])
+            return action in FARM_ROLE_PERMISSIONS.get(emp.role, [])
 
     return False
 

@@ -191,8 +191,9 @@ class SensorService:
     async def create_sensor(self, sensor_data: RegisterSensor) -> ResponseSensor:
         collection = self.get_collection()
         sensor_dict = sensor_data.model_dump()
+        
         existing = await collection.find_one({
-            "farm_id": sensor_dict["farm_id"],
+            "lab_id": sensor_dict["lab_id"],
             "sensor_name": re.compile(f"^{re.escape(sensor_dict['sensor_name'])}$", re.IGNORECASE)
         })
 
@@ -229,7 +230,7 @@ class SensorService:
     
     async def get_sensors_by_farm(self, farm_id: str) -> List[ResponseSensor]:
         collection = self.get_collection()
-        docs  =await collection.find({"farm_id": farm_id}).to_list()
+        docs  =await collection.find({"lab_id": farm_id}).to_list()
         sensors = []
         for doc in docs:
             doc['id']=str(doc['_id'])

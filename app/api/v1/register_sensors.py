@@ -28,17 +28,15 @@ async def create_sensor(
     lab_service=Depends(get_lab_service)
 ):
     try:
+        sensor.created_by = user['user_id']
         lab = await lab_service.get_lab_by_id(sensor.lab_id)
-
         if not lab:
             raise HTTPException(status_code=404, detail="Lab not found")
-
         if not can_access_farm(user, lab, "create"):
             raise HTTPException(
                 status_code=403,
                 detail="You are not allowed to create sensor data for this farm"
             )
-
         return await sensor_service.create_sensor(sensor)
 
     except HTTPException:
