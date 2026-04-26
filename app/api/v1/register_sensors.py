@@ -66,6 +66,7 @@ async def list_sensors(
     sensor_service: SensorService = Depends(get_sensor_service)
 ):
     try:
+        print(f"Received lab_id: {lab_id}")
         lab = await lab_service.get_lab_by_id(lab_id)
 
         if not lab:
