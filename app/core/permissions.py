@@ -22,7 +22,7 @@ ROLE_PERMISSIONS = {
 
 
 
-ROLE_PERMISSIONS = {
+FARM_ROLE_PERMISSIONS = {
     FarmRole.OWNER: [
         "read", "create", "update", "delete", "manage_farm", "manage_users"
     ],

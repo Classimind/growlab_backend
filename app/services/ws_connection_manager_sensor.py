@@ -31,10 +31,10 @@ class SensorConnectionManager:
             for ws in self.active_connections[key]:
                 try:
                     serialized_data = self.serialize_sensor_data(data)
-                    print(serialized_data)
+                    # print(serialized_data)
                     await ws.send_json({"type":"update","data":serialized_data})
                 except  Exception as e:
-                    print(e)
+                    # print(e)
                     self.disconnect(key, ws)
 
 sensormanager = SensorConnectionManager()
