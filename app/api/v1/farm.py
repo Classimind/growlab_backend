@@ -28,7 +28,7 @@ async def create_lab(
     return await service.create_lab(lab)
 
 
-farm_router.get("/")
+@farm_router.get("/")
 async def get_all_labs(
     service: LabService = Depends(get_lab_service),
     user=Depends(get_current_user),
