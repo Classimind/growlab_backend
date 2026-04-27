@@ -12,7 +12,7 @@ class LabEmployee(BaseModel):
 
 
 class Lab(BaseModel):
-    id: Optional[str] = Field(default=None)
+    id: Optional[str] = Field(default=None,alias="_id")
     name: str = Field(..., min_length=3, max_length=100)
     description: Optional[str] = Field(default="Hydroponics optimization lab")
     target_plant: TargetPlant = Field(default=TargetPlant.LETTUCE)

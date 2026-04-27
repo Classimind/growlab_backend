@@ -40,7 +40,7 @@ def require_roles(allowed_roles: list):
 
 def can_access_farm(user, lab:Lab, action: str = "read") -> bool:
     user_id = str(user["user_id"])
-    if lab['created_by'] == user_id:
+    if lab.created_by == user_id:
         return action in FARM_ROLE_PERMISSIONS[FarmRole.OWNER]
     for emp in lab.employees:
         if str(emp.user_id) == user_id:
