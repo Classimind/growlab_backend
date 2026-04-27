@@ -37,17 +37,37 @@ def require_roles(allowed_roles: list):
         return user
     return dependency
 
-
-def can_access_farm(user, lab:Lab, action: str = "read") -> bool:
+def can_access_farm(user, lab, action: str = "read") -> bool:
     user_id = str(user["user_id"])
-    if lab.created_by == user_id:
-        return action in FARM_ROLE_PERMISSIONS[FarmRole.OWNER]
-    for emp in lab.employees:
-        if str(emp.user_id) == user_id:
-            if emp.permissions:
-                return action in emp.permissions
 
-            return action in FARM_ROLE_PERMISSIONS.get(emp.role, [])
+    if isinstance(lab, dict):
+        created_by = str(lab.get("created_by"))
+
+        employees = lab.get("employees", [])
+    else:
+        created_by = str(lab.created_by)
+        employees = lab.employees or []
+
+    if created_by == user_id:
+        return action in FARM_ROLE_PERMISSIONS[FarmRole.OWNER]
+    for emp in employees:
+
+        if isinstance(emp, dict):
+            emp_user_id = str(emp.get("user_id"))
+            role = emp.get("role")
+            permissions = emp.get("permissions")
+
+        else:
+            emp_user_id = str(emp.user_id)
+            role = emp.role
+            permissions = emp.permissions
+
+        if emp_user_id == user_id:
+
+            if permissions:
+                return action in permissions
+
+            return action in FARM_ROLE_PERMISSIONS.get(role, [])
 
     return False
 
