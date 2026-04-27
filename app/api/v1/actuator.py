@@ -35,7 +35,7 @@ actuator_status_service = ActuatorStatusService()
 #             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
 #             detail=str(e)
 #         )
-router.post("/", response_model=ResponseActuator, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=ResponseActuator, status_code=status.HTTP_201_CREATED)
 async def create_actuator(
     actuator: Actuator,
     user = Depends(get_current_user),
