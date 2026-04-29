@@ -5,7 +5,8 @@ from app.models.farm import Lab
 from app.services.lab_service import LabService
 from app.db.clients import get_db
 from pymongo.errors import PyMongoError
-from app.core.dependencies import get_current_user
+from app.core.auth_identity import get_current_user
+from app.core.dependencies import  can_access_farm
 from app.core.roles import FarmRole,Role
 from app.core.dependencies import require_roles
 from bson import ObjectId

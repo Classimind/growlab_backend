@@ -29,6 +29,7 @@ def require_permission(permission: str):
 
 def require_roles(allowed_roles: list):
     def dependency(user=Depends(get_current_user)):
+        print(user)
         if user['role'] not in allowed_roles:
             raise HTTPException(
                 status_code=403,

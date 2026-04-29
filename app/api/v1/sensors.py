@@ -5,8 +5,9 @@ from app.models.sensors import Sensor
 from app.services.ws_connection_manager_sensor import sensormanager
 from app.services.sensor_service import CollectSensorValueService,SensorService
 import asyncio
-from app.core.dependencies import get_current_user, can_access_farm
 from app.api.v1.farm import get_lab_service
+from app.core.auth_identity import get_current_user
+from app.core.dependencies import  can_access_farm
 
 sensor_service = CollectSensorValueService()
 

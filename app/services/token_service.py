@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
 import os
@@ -8,6 +8,9 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, ExpiredSignatureError
 from app.core.config import KTM_TZ
+from fastapi import Depends, Header, HTTPException, status
+from app.db.clients import get_db
+from app.services.api_key_service import APIKeyService
 
 # Load environment variables
 load_dotenv()
@@ -20,7 +23,6 @@ ALGORITHM = "HS256"
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60        # 1 hour
 REFRESH_TOKEN_EXPIRE_DAYS = 30          # 30 days
-
 
 # "Take token from Authorization: Bearer <token>"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
@@ -50,6 +52,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 
 
 
+
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> tuple:
     """
     Create a JWT access token with optional expiration.
@@ -68,7 +71,6 @@ def create_refresh_token(data: dict, expires_delta: Optional[timedelta] = None) 
     expire = datetime.now(KTM_TZ) + (expires_delta or timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS))
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-
 
 
 # def get_current_user(token: str = Depends()):

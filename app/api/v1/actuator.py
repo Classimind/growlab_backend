@@ -5,7 +5,8 @@ from app.services.actuator import ActuatorService
 from app.services.actuator_status_service import ActuatorStatusService
 from app.services.mqtt_service import mqtt_service
 from app.services.ws_connection_manager import manager
-from app.core.dependencies import get_current_user,can_access_farm
+from app.core.auth_identity import get_current_user
+from app.core.dependencies import  can_access_farm
 from app.api.v1.farm import get_lab_service
 from app.models.farm import Lab
 import asyncio

@@ -1,9 +1,11 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException,Depends
 from typing import List
 from app.models.plant import Plant
 from app.db.clients import mongodb
 from app.services.cache import get_cache,set_cache
 import json
+from app.core.auth_identity import get_current_user
+from app.core.dependencies import  can_access_farm
 
 router = APIRouter()
 
@@ -11,11 +13,12 @@ router = APIRouter()
 # GET all plants
 # -------------------------------
 @router.get("/", response_model=List[Plant])
-async def get_plants():
+async def get_plants(user=Depends(get_current_user)):
     """
     Retrieve all plants from MongoDB or Redis cache.
     Returns a list of Plant objects.
     """
+    print(user)
     cache_key = "all_plants"
     cached = await get_cache(cache_key)
     if cached:

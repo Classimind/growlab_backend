@@ -5,6 +5,7 @@ from typing import Dict
 from datetime import datetime,timezone
 import re
 from app.core.roles import Role,FarmRole
+from pydantic import EmailStr
 
 class Provider(str, Enum):
     EMAIL = "email"
@@ -119,10 +120,6 @@ class EmailSignup(BaseModel):
         if not v:
             raise ValueError("You must accept the terms and conditions")
         return v
-
-class EmailLogin(BaseModel):
-    email: EmailStr
-    password: str
 
 class OAuthLogin(BaseModel):
     provider: Provider

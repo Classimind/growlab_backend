@@ -4,7 +4,8 @@ from bson import ObjectId
 from app.models import user
 from app.models.sensors import RegisterSensor,ResponseSensor
 from app.services.sensor_service import SensorService  
-from app.core.dependencies import get_current_user, can_access_farm
+from app.core.auth_identity import get_current_user
+from app.core.dependencies import  can_access_farm
 from app.api.v1.farm import get_lab_service  
 
 router = APIRouter(prefix="/sensors", tags=["Sensors"])

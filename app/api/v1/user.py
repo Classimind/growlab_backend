@@ -1,10 +1,11 @@
 from fastapi import APIRouter,HTTPException
-from app.models.user import Token,EmailSignup,EmailLogin,Provider,OAuthLogin
+from app.models.user import Token,EmailSignup,Provider,OAuthLogin
 from app.services.token_service import generate_tokens,decode_token,create_access_token
 from app.services.user_service import UserService
 from pymongo.errors import DuplicateKeyError
 from fastapi import APIRouter, Depends, HTTPException
 from app.models.user import RefreshRequest
+from fastapi.security import OAuth2PasswordRequestForm
 router = APIRouter()
 
 def get_user_service():
@@ -68,12 +69,12 @@ async def signup(
 
 @router.post("/login", response_model=Token)
 async def login(
-    data: EmailLogin,
+    data: OAuth2PasswordRequestForm = Depends(),
     user_service: UserService = Depends(get_user_service)
 ):
     try:
         user = await user_service.authenticate_email_user(
-            data.email,
+            data.username,
             data.password
         )
 
