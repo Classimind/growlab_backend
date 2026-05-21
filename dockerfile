@@ -24,6 +24,7 @@ RUN pip install --no-cache-dir --upgrade pip \
 # Copy app
 COPY . .
 
+
 # Expose port
 EXPOSE 8989
 
