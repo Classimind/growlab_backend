@@ -19,20 +19,19 @@ from app.api.v1.farm import farm_router
 from app.utilities.utilities import generate_token
 import logging
 import os 
-loop = asyncio.get_running_loop()
-
 
 from fastapi.staticfiles import StaticFiles
 
 UPLOAD_FOLDER = "uploaded_photos"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-
+loop = None
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # logger for the debugging
+    loop = asyncio.get_running_loop()
     logging.basicConfig(
     level=logging.INFO,  
     format="%(asctime)s [%(levelname)s] %(message)s",

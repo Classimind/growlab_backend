@@ -4,6 +4,7 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from fastapi import HTTPException
 from app.models.api_key import APIKeyCreateRequest, APIKeyModel
 from app.utilities.crypto_utils import generate_api_key,hash_api_key,verify_api_key
+from bson import ObjectId
 
 from app.core.permissions import FARM_ROLE_PERMISSIONS
 
@@ -14,10 +15,16 @@ class APIKeyService:
 
 
     async def create_api(self, userId: str, payload: APIKeyCreateRequest):
+        name = payload.name.strip().lower()
+        if not payload.name or not payload.name.strip():
+            raise HTTPException(
+                status_code=400,
+                detail="Name is required"
+            )
 
         existing = await self.collection.find_one({
             "lab_id": payload.lab_id,
-            "name": payload.name
+            "name": name
         })
         
 
@@ -80,6 +87,23 @@ class APIKeyService:
             "count": len(api_keys),
             "api_keys": api_keys
         }
+    
+
+    async def get_api_by_id(self, key_id: str):
+        try:
+            doc = await self.collection.find_one({
+                "_id": ObjectId(key_id)
+            })
+        except Exception:
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid API key id format"
+            )
+
+        if not doc:
+            return None
+        doc['_id'] = str(doc["_id"])
+        return doc
 
     async def validate_api(self, raw_key: str):
 
@@ -98,19 +122,7 @@ class APIKeyService:
         return None
 
 
-    async def revoke_api(self, raw_key: str):
-
-        cursor = self.collection.find({"is_active": True})
-
-        async for doc in cursor:
-
-            if verify_api_key(raw_key, doc["hashed_key"]):
-
-                await self.collection.update_one(
-                    {"_id": doc["_id"]},
-                    {"$set": {"is_active": False}}
-                )
-
-                return True
-
-        return False
+    async def revoke_api(self, key_id: str):
+        return await self.collection.delete_one(
+            {"_id": ObjectId(key_id)}
+        )

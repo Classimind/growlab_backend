@@ -5,6 +5,7 @@ from app.db.clients import get_db
 from app.core.auth_identity import get_current_user
 from app.core.dependencies import  can_access_farm
 from app.api.v1.farm import get_lab_service
+from fastapi import Depends, HTTPException, Query
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 router = APIRouter(prefix="/api-keys", tags=["API Keys"])
@@ -64,42 +65,47 @@ async def get_api_keys_by_lab(
 
     return await service.get_api_keys_by_lab(lab_id=lab_id)
 
+
 @router.delete("/revoke")
 async def revoke_api_key(
-    api_key: str = Header(...),
-    lab_id: str = Header(...),
+    key_id: str = Query(...),
+    lab_id: str = Query(...),
     user=Depends(get_current_user),
     service: APIKeyService = Depends(get_service),
-    lab_service=Depends(get_lab_service)
+    lab_service=Depends(get_lab_service),
 ):
-    result = await service.validate_api(api_key)
-
-    if not result:
-        raise HTTPException(404, "API key not found")
-
+    # 1. Fetch lab (still useful for validation context)
     lab = await lab_service.get_lab_by_id(lab_id)
-
     if not lab:
-        raise HTTPException(404, "Lab not found")
+        raise HTTPException(status_code=404, detail="Lab not found")
 
-    if result["lab_id"] != lab_id:
+    # 2. Fetch API key
+    api_key = await service.get_api_by_id(key_id)
+
+    if not api_key:
+        raise HTTPException(status_code=404, detail="API key not found")
+
+    # 3. Ensure key belongs to lab (multi-tenant safety)
+    if api_key.get("lab_id") != lab_id:
         raise HTTPException(
             status_code=403,
             detail="API key does not belong to this lab"
         )
-
-    if not can_access_farm(user=user, lab=lab, action="delete"):
+    
+    if api_key.get("user_id","") != str(user["user_id"]):
         raise HTTPException(
             status_code=403,
-            detail="You do not have permission to revoke API keys in this lab"
+            detail="Only the owner can revoke this API key"
         )
 
-    success = await service.revoke_api(api_key)
 
+    success = await service.revoke_api(key_id)
+    print(success)
     if not success:
-        raise HTTPException(404, "API key not found")
+        raise HTTPException(status_code=500, detail="Failed to revoke API key")
 
     return {
         "message": "API key revoked successfully",
-        "lab_id": lab_id
+        "lab_id": lab_id,
+        "key_id": key_id
     }
