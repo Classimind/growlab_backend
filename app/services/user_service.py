@@ -4,6 +4,7 @@ from pymongo.errors import DuplicateKeyError
 from typing import Optional
 from app.db.clients import mongodb
 from datetime import datetime, timezone, timedelta
+from bson import ObjectId
 
 
 USER_COLLECTION = "users"
@@ -16,6 +17,27 @@ pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 class UserService:
     def __init__(self):
         self.collection = mongodb.db[USER_COLLECTION]
+
+    async def update_fcm_token(self, user_id: str, token: str):
+        user = await self.collection.find_one({"_id": ObjectId(user_id) })
+
+        if not user:
+            raise Exception("User not found")
+
+        # Skip update if same token
+        if user.get("fcm_token") == token:
+            return False
+
+        result = await self.collection.update_one(
+            {"_id": user_id},
+            {
+                "$set": {
+                    "fcm_token": token
+                }
+            }
+        )
+
+        return result.modified_count > 0
         
     
     async def init_indexes(self):

@@ -131,7 +131,7 @@ class ActuatorStatusService:
             actuator_data = await cursor.to_list(length=limit)
 
             if not actuator_data:
-                raise HTTPException(status_code=404, detail="No actuator data found")
+                return []
 
             for doc in actuator_data:
                 doc["id"] = str(doc["_id"])

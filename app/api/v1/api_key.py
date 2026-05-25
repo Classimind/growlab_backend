@@ -34,11 +34,35 @@ async def create_api_key(
             status_code=403,
             detail="You do not have permission to create in this lab"
         )
-
+ 
     return await service.create_api(
         userId=user["user_id"],
         payload=payload
     )
+
+@router.get("/lab/{lab_id}")
+async def get_api_keys_by_lab(
+    lab_id: str,
+    user=Depends(get_current_user),
+    service: APIKeyService = Depends(get_service),
+    lab_service=Depends(get_lab_service)
+):
+
+    lab = await lab_service.get_lab_by_id(lab_id)
+
+    if not lab:
+        raise HTTPException(
+            status_code=404,
+            detail="Lab not found"
+        )
+
+    if not can_access_farm(user=user, lab=lab, action="read"):
+        raise HTTPException(
+            status_code=403,
+            detail="You do not have permission to view API keys in this lab"
+        )
+
+    return await service.get_api_keys_by_lab(lab_id=lab_id)
 
 @router.delete("/revoke")
 async def revoke_api_key(

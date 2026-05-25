@@ -1,9 +1,7 @@
 import secrets
-from datetime import datetime, timedelta
-
+from datetime import datetime
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from fastapi import HTTPException
-
 from app.models.api_key import APIKeyCreateRequest, APIKeyModel
 from app.utilities.crypto_utils import generate_api_key,hash_api_key,verify_api_key
 
@@ -21,21 +19,20 @@ class APIKeyService:
             "lab_id": payload.lab_id,
             "name": payload.name
         })
+        
 
         if existing:
             raise HTTPException(
                 status_code=400,
                 detail="API key name already exists for this lab"
             )
-
+        
         if payload.role not in FARM_ROLE_PERMISSIONS:
             raise HTTPException(
                 status_code=400,
                 detail="Invalid role"
             )
-
         permissions = list(FARM_ROLE_PERMISSIONS[payload.role])
-        print(permissions)
         raw_key = generate_api_key()
         hashed_key = hash_api_key(raw_key)
 
@@ -60,7 +57,29 @@ class APIKeyService:
             "permissions": permissions,
             "message": "API key created successfully"
         }
+    
+    async def get_api_keys_by_lab(self, lab_id: str):
 
+        cursor = self.collection.find({"lab_id": lab_id})
+
+        api_keys = []
+
+        async for doc in cursor:
+            api_keys.append({
+                "id": str(doc["_id"]),
+                "user_id": doc["user_id"],
+                "lab_id": doc["lab_id"],
+                "name": doc["name"],
+                "permissions": doc["permissions"],
+                "is_active": doc["is_active"],
+                "created_at": doc["created_at"],
+                "expires_at": doc.get("expires_at")
+            })
+        return {
+            "lab_id": lab_id,
+            "count": len(api_keys),
+            "api_keys": api_keys
+        }
 
     async def validate_api(self, raw_key: str):
 

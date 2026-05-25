@@ -106,25 +106,25 @@ async def get_actuator_by_id(
 @router.get("/", response_model=List[ResponseActuator])
 async def get_all_actuators(
     farm_id: Optional[str] = None,
-    user = Depends(get_current_user)
+    user = Depends(get_current_user),
+    lab_service = Depends(get_lab_service)
 ):
     try:
-        query_farm_id = farm_id
         if farm_id:
-            allowed = can_access_farm(user, Lab(**await get_lab_service().get_lab_by_id(farm_id)), 'read')
-
+            allowed = can_access_farm(user, Lab(**await lab_service.get_lab_by_id(farm_id)), 'read')
             if not allowed:
                 raise HTTPException(
                     status_code=403,
                     detail="You are not allowed to access this farm"
                 )
-        actuators = await actuator_service.get_all_actuators(query_farm_id)
+        actuators = await actuator_service.get_all_actuators(farm_id)
 
         return actuators
 
     except HTTPException:
         raise
     except Exception as e:
+        print(e)
         raise HTTPException(
             status_code=500,
             detail=str(e)

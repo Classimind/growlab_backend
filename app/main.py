@@ -98,7 +98,7 @@ async def root():
         latest_sensors = await sensor_service.get_recent_sensors_data()
         # print(latest_sensors)
         latest_actuators = await actuator_service.get_recent_actuators_data()
-        print(latest_sensors)
+        # print(latest_sensors)
         return {
             "latest_sensors": latest_sensors,
             "latest_actuators": latest_actuators
@@ -108,6 +108,7 @@ async def root():
         # Pass through HTTP errors
         raise e
     except Exception as e:
+        print(e)
         # Catch-all for unexpected errors
         raise HTTPException(status_code=500, detail=f"Error fetching device data: {str(e)}")
 

@@ -1,6 +1,6 @@
-from fastapi import APIRouter,HTTPException
-from app.models.user import Token,EmailSignup,Provider,OAuthLogin
-from app.services.token_service import generate_tokens,decode_token,create_access_token
+from fastapi import APIRouter,HTTPException,status
+from app.models.user import Token,EmailSignup,Provider,OAuthLogin, FCMTokenUpdate
+from app.services.token_service import generate_tokens,decode_token,create_access_token,get_current_user
 from app.services.user_service import UserService
 from pymongo.errors import DuplicateKeyError
 from fastapi import APIRouter, Depends, HTTPException
@@ -73,6 +73,7 @@ async def login(
     user_service: UserService = Depends(get_user_service)
 ):
     try:
+        print(data)
         user = await user_service.authenticate_email_user(
             data.username,
             data.password
@@ -104,6 +105,48 @@ async def login(
 
 
 
+@router.put("/fcm-token")
+async def update_fcm_token(
+    data: FCMTokenUpdate,
+    user=Depends(get_current_user),
+    user_service=Depends(get_user_service),
+):
+    try:
+        token = data.fcm_token.strip()
+
+        if not token:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="FCM token cannot be empty"
+            )
+
+        updated = await user_service.update_fcm_token(
+            user_id=user['user_id'],
+            token=token
+        )
+
+        if not updated:
+            return {
+                "success": True,
+                "message": "FCM token already up to date"
+            }
+
+        return {
+            "success": True,
+            "message": "FCM token updated successfully"
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print(f"FCM update error: {e}")
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to update FCM token"
+        )
+    
 @router.post("/oauth-login", response_model=Token)
 async def oauth_login(data: OAuthLogin,user_service: UserService = Depends(get_user_service)):
     

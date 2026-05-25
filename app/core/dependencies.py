@@ -29,7 +29,7 @@ def require_permission(permission: str):
 
 def require_roles(allowed_roles: list):
     def dependency(user=Depends(get_current_user)):
-        print(user)
+        
         if user['role'] not in allowed_roles:
             raise HTTPException(
                 status_code=403,
@@ -39,8 +39,9 @@ def require_roles(allowed_roles: list):
     return dependency
 
 def can_access_farm(user, lab, action: str = "read") -> bool:
+    print(user)
     user_id = str(user["user_id"])
-
+    print(user_id)
     if isinstance(lab, dict):
         created_by = str(lab.get("created_by"))
 

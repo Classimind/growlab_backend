@@ -79,6 +79,9 @@ class User(BaseModel):
         return self
     
 
+class FCMTokenUpdate(BaseModel):
+    fcm_token: str
+
 
 class EmailSignup(BaseModel):
     email: EmailStr
