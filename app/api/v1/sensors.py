@@ -85,7 +85,7 @@ async def create_sensors_batch(
         if not sensors:
             raise HTTPException(status_code=400, detail="No sensor data provided")
         lab_id = sensors[0].lab_id
-        lab = await lab_service.get_by_id(lab_id)
+        lab = await lab_service.get_lab_by_id(lab_id)
         if not lab:
             raise HTTPException(status_code=404, detail="Lab not found")
 
