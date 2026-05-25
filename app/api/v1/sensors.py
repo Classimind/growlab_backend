@@ -96,10 +96,10 @@ async def create_sensors_batch(
                     detail="All sensors must belong to the same lab"
                 )
 
-        if not can_access_farm(user, lab, "collect"):
+        if not can_access_farm(user, lab, "create"):
             raise HTTPException(
                 status_code=403,
-                detail="You do not have permission to collect sensor data"
+                detail="You do not have permission to create sensor data"
             )
 
         await sensor_service.add_sensor_values_batch(sensors)

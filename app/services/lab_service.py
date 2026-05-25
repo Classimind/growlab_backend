@@ -100,9 +100,10 @@ class LabService:
 
         if not ObjectId.is_valid(lab_id):
             return None
+        print(lab_id)
 
         lab = await self.collection.find_one({"_id": ObjectId(lab_id)})
-
+        print(lab)
         return serialize_lab(lab) if lab else None
 
     async def update_lab(self, lab_id: str, update_data: Dict[str, Any]) -> Dict[str, Any]:

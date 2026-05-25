@@ -46,7 +46,7 @@ async def get_current_user(
 
         if not api_key_doc:
             raise HTTPException(
-                status_code=401,
+                status_code=403,
                 detail="Invalid API key"
             )
 

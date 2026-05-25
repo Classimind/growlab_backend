@@ -39,7 +39,6 @@ def require_roles(allowed_roles: list):
     return dependency
 
 def can_access_farm(user, lab, action: str = "read") -> bool:
-    print(user)
     user_id = str(user["user_id"])
     print(user_id)
     if isinstance(lab, dict):
