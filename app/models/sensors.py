@@ -6,6 +6,7 @@ from app.core.config import KTM_TZ
 
 class Sensor(BaseModel):
     sensor_id:str
+    lab_id: str
     value: float
     created: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
