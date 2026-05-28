@@ -1,3 +1,4 @@
+from app.models import user
 from app.models.user import User, Provider
 from passlib.context import CryptContext
 from pymongo.errors import DuplicateKeyError
@@ -5,7 +6,7 @@ from typing import Optional
 from app.db.clients import mongodb
 from datetime import datetime, timezone, timedelta
 from bson import ObjectId
-
+from fastapi import HTTPException, status
 
 USER_COLLECTION = "users"
 
@@ -44,18 +45,77 @@ class UserService:
         await self.collection.create_index("email", unique=True, sparse=True)
         await self.collection.create_index("oauth.provider_user_id", unique=True, sparse=True)
 
-    # -------------------------
     # Password Utilities
-    # -------------------------
     def hash_password(self, password: str) -> str:
         return pwd_context.hash(password)
 
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         return pwd_context.verify(plain_password, hashed_password)
 
-    # -------------------------
+    async def get_user_by_id(self, user_id: str):
+
+        if not ObjectId.is_valid(user_id):
+            return None
+
+        user = await self.collection.find_one(
+            {"_id": ObjectId(user_id)},
+            {
+                "password": 0,
+                "security": 0,
+                "sessions": 0,
+                "locked_until":0,
+                "failed_login_attempts":0
+            }
+        )
+
+        if not user:
+            return None
+
+        user["_id"] = str(user["_id"])
+        return User(**user)
+ 
+    
+    async def update_user_profile(self, user_id: str, update_data: dict):
+
+        if not ObjectId.is_valid(user_id):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid user_id"
+            )
+
+        clean_data = {
+            k: v for k, v in update_data.items()
+            if v is not None
+        }
+
+        if not clean_data:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="No valid fields to update"
+            )
+
+        clean_data["updated_at"] = datetime.now(timezone.utc)
+        
+        result = await self.collection.update_one(
+            {"_id": ObjectId(user_id)},
+            {
+                "$set": {
+                    "profile.username": clean_data.get("username"),
+                    "profile.full_name": clean_data.get("full_name"),
+                    "profile.avatar_url": clean_data.get("avatar_url"),
+                    "profile.bio": clean_data.get("bio"),
+                    "profile.phone_number": clean_data.get("phone_number"),
+                    "profile.location": clean_data.get("location"),
+                }
+            },
+            upsert=True
+        )
+        if result.matched_count == 0:
+            return None
+        user = await self.get_user_by_id(user_id)
+        return user
+
     # User CRUD Operations
-    # -------------------------
     async def add_user(self, userdata: dict):
         """
         Add a new user to the database.
@@ -100,9 +160,7 @@ class UserService:
             return dt.replace(tzinfo=timezone.utc)
         return dt
 
-    # -------------------------
     # Authentication
-    # -------------------------
     async def authenticate_email_user(self, email: str, password: str) -> Optional[dict]:
 
         user = await self.find_user_by_email(email)

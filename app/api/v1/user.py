@@ -1,15 +1,17 @@
 from fastapi import APIRouter,HTTPException,status
-from app.models.user import Token,EmailSignup,Provider,OAuthLogin, FCMTokenUpdate
+from app.models.user import Token,EmailSignup,Provider,OAuthLogin, FCMTokenUpdate, User
 from app.services.token_service import generate_tokens,decode_token,create_access_token,get_current_user
 from app.services.user_service import UserService
 from pymongo.errors import DuplicateKeyError
 from fastapi import APIRouter, Depends, HTTPException
-from app.models.user import RefreshRequest
+from app.models.user import RefreshRequest,UserProfile
 from fastapi.security import OAuth2PasswordRequestForm
 router = APIRouter()
 
 def get_user_service():
     return UserService()
+
+
 
 @router.post("/refresh")
 async def refresh_token(data: RefreshRequest):
@@ -102,6 +104,39 @@ async def login(
             status_code=500,
             detail=str(e)
         )
+
+@router.get("/", response_model=User)
+async def get_user_by_id(
+    user: dict = Depends(get_current_user),
+    user_service: UserService = Depends(get_user_service)
+):
+    user = await user_service.get_user_by_id(user["user_id"])
+    if not user:
+        raise HTTPException(404, "User not found")
+
+    return user
+
+@router.patch(
+    "/update/profile",
+    response_model=User,
+    status_code=status.HTTP_200_OK
+)
+async def update_user_profile(
+    payload: UserProfile,
+    user=Depends(get_current_user),
+    user_service: UserService = Depends(get_user_service)
+):
+
+    update_data = payload.model_dump(exclude_unset=True)
+    user = await user_service.update_user_profile(user["user_id"], update_data)
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+
+    return user 
 
 
 

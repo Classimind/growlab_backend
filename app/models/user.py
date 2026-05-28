@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field, field_validator,model_validator
-from typing import Optional
+from typing import Optional,List
 from enum import Enum
 from typing import Dict
 from datetime import datetime,timezone
@@ -27,57 +27,6 @@ class OAuthUser(BaseModel):
     access_token: str = Field(..., description="OAuth access token")
     refresh_token: Optional[str] = Field(None, description="OAuth refresh token")
 
-class User(BaseModel):
-
-    email: Optional[EmailStr] = None
-    password: Optional[str] = None
-    provider: Provider=Provider.EMAIL
-    oauth: Optional[OAuthUser] = None
-
-
-    full_name: Optional[str] = Field(default=None, max_length=100)
-    username: Optional[str] = Field(default=None, min_length=3, max_length=50)
-    avatar_url: Optional[str] = None
-    bio: Optional[str] = Field(default=None, max_length=300)
-    phone_number: Optional[str] = None
-    location: Optional[str] = None
-
-    #  GLOBAL ROLE
-    role: Role = Role.USER
-
-    #  FARM RBAC (MULTI-TENANT)
-    domain_ids: Dict[str, FarmRole] = Field(
-        default_factory=dict,
-        description="farm_id → FarmRole mapping"
-    )
-
-
-    #  ACCOUNT STATUS
-    is_active: bool = True
-    is_verified: bool = False
-
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: Optional[datetime] = None
-    last_login: Optional[datetime] = None
-
-    # SECURITY
-    failed_login_attempts: int = 0
-    locked_until: Optional[datetime] = None
-
-    # VALIDATION
-    @model_validator(mode="after")
-    def validate_auth(self):
-
-        if self.provider == Provider.EMAIL:
-            if not self.email or not self.password:
-                raise ValueError("EMAIL provider requires email + password")
-
-        else:
-            if not self.oauth:
-                raise ValueError("OAuth data required for non-email provider")
-
-        return self
-    
 
 class FCMTokenUpdate(BaseModel):
     fcm_token: str
@@ -95,7 +44,7 @@ class EmailSignup(BaseModel):
     role: Role = Role.USER
 
     # Legal / compliance
-    accept_terms: bool
+    accept_terms: bool 
 
     #  Password strength validation
     @field_validator("password")
@@ -123,6 +72,64 @@ class EmailSignup(BaseModel):
         if not v:
             raise ValueError("You must accept the terms and conditions")
         return v
+
+class UserSecurity(BaseModel):
+    is_active: bool = True
+    is_verified: bool = False
+
+    failed_login_attempts: int = 0
+    locked_until: Optional[datetime] = None
+
+class UserProfile(BaseModel):
+    full_name: Optional[str] = None
+    username: Optional[str] = None
+    avatar_url: Optional[str] = None
+    bio: Optional[str] = None
+    phone_number: Optional[str] = None
+    location: Optional[str] = None
+
+
+class User(BaseModel):
+    id: Optional[str] = Field(default=None, alias="_id")
+
+    # AUTH
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None  # hashed only
+    provider: Provider = Provider.EMAIL
+    oauth: Optional[OAuthUser] = None
+
+    # PROFILE
+    profile: UserProfile = UserProfile()
+
+    # AUTHZ
+    role: Role = Role.USER
+    # domain_ids: Dict[str, FarmRole] = Field(default_factory=dict)
+    domain_ids: Dict[str, FarmRole] = Field(default_factory=dict)
+
+
+    # SECURITY
+    security: UserSecurity = UserSecurity()
+
+    # SESSIONS
+    sessions: List[Dict] = []
+
+    # METADATA
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: Optional[datetime] = None
+    last_login: Optional[datetime] = None
+
+    @field_validator("domain_ids", mode="before")
+    def fix_domain_ids(cls, v):
+        if v is None:
+            return {}
+        if isinstance(v, list):
+            return {} 
+        return v
+
+    class Config:
+        populate_by_name = True
+
+
 
 class OAuthLogin(BaseModel):
     provider: Provider
