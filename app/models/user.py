@@ -133,7 +133,7 @@ class OAuthLogin(BaseModel):
     avatar_url: Optional[str] = None
 
 class Token(BaseModel):
-    _id: str
+    id: str
     access_token: str
     refresh_token:str
     token_type: str = "bearer"

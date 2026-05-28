@@ -132,7 +132,7 @@ def generate_tokens( user: dict):
         }
         access_token,expire= create_access_token(payload)
         return {
-            "_id": payload["user_id"],
+            "id": payload["user_id"],
             "access_token": access_token,
             "refresh_token": create_refresh_token(payload),
             "token_type": "bearer",
