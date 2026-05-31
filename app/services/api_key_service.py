@@ -106,21 +106,21 @@ class APIKeyService:
         return doc
 
     async def validate_api(self, raw_key: str):
+        now = datetime.utcnow()
 
-        cursor = self.collection.find({"is_active": True})
+        cursor = self.collection.find({
+            "is_active": True,
+            "$or": [
+                {"expires_at": None},
+                {"expires_at": {"$gt": now}}
+            ]
+        })
 
         async for doc in cursor:
-
-            # check expiry
-            if doc.get("expires_at") and doc["expires_at"] < datetime.utcnow():
-                continue
-
-            # verify hash
             if verify_api_key(raw_key, doc["hashed_key"]):
                 return doc
 
         return None
-
 
     async def revoke_api(self, key_id: str):
         return await self.collection.delete_one(

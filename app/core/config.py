@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     # Redis configuration
     REDIS_URI: str 
     REDIS_CACHE_EXPIRE: int = 300
+    DEVICE_TIMEOUT_SEC: int = 300
 
     # CORS settings
     ALLOWED_ORIGINS: List[str] = ['*']

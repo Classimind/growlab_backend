@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 from app.api.v1 import user
 from app.db.clients import connect_db,close_db
 from app.services.cache import connect_redis,close_redis
-from app.api.v1 import plant_database,app_ws,sensors,register_sensors,actuator,api_key
+from app.api.v1 import plant_database,app_ws,sensors,register_sensors,actuator,api_key,device
 from app.services.mqtt_service import mqtt_service
 import asyncio
 from app.services.user_service import UserService
@@ -80,6 +80,7 @@ app.include_router(farm_router,prefix='/labs',tags=['farm/lab'])
 app.include_router(sensors.router,prefix="/sensors-history",tags=['sensors-history'])
 app.include_router(register_sensors.router)
 app.include_router(api_key.router)
+app.include_router(device.router)
 app.include_router(actuator.router)
 # app.include_router(prediction.app,prefix='/prediction',tags=['disease','predictions'])
 app.include_router(prediction_pth.app,prefix='/torch')
