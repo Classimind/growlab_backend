@@ -4,7 +4,7 @@ import numpy as np
 import onnxruntime as ort
 import io
 import time
-from app.utilities.utilities import softmax, preprocess_image
+from app.utils.utilities import softmax, preprocess_image
 from pathlib import Path
 
 # -----------------------------------

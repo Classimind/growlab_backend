@@ -5,7 +5,7 @@ import torchvision.models as models
 import numpy as np
 import time
 from pathlib import Path
-from app.utilities.utilities import preprocess_image
+from app.utils.utilities import preprocess_image
 
 # -----------------------------------
 # Configuration

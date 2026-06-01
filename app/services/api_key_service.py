@@ -3,7 +3,7 @@ from datetime import datetime
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from fastapi import HTTPException
 from app.models.api_key import APIKeyCreateRequest, APIKeyModel
-from app.utilities.crypto_utils import generate_api_key,hash_api_key,verify_api_key
+from app.utils.crypto_utils import generate_api_key,hash_api_key,verify_api_key
 from bson import ObjectId
 
 from app.core.permissions import FARM_ROLE_PERMISSIONS

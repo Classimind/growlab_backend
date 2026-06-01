@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings
-from typing import List
+from typing import List,ClassVar
 import os
 from pydantic import Field
 
@@ -30,6 +30,10 @@ class Settings(BaseSettings):
     # CORS settings
     ALLOWED_ORIGINS: List[str] = ['*']
 
+    MAX_UPLOAD_SIZE: ClassVar[int] = 50 * 1024 * 1024
+    CHUNK_SIZE: ClassVar[int] = 1024 * 1024
+    RABBITMQ_URL: str = os.getenv("RABBITMQ_URL", "amqp://guest:guest@localhost/")
+    FIRMWARE_ROOT:str = "firmwares"
     # Security / session
     SECRET_KEY: str = "supersecretkey"
     DEBUG: bool = True

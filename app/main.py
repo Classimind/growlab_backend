@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 from app.api.v1 import user
 from app.db.clients import connect_db,close_db
 from app.services.cache import connect_redis,close_redis
-from app.api.v1 import plant_database,app_ws,sensors,register_sensors,actuator,api_key,device
+from app.api.v1 import plant_database,app_ws,sensors,register_sensors,actuator,api_key,device,firmware,analytics
 from app.services.mqtt_service import mqtt_service
 import asyncio
 from app.services.user_service import UserService
@@ -16,9 +16,12 @@ from app.api.v1.disease_prediction import prediction
 from app.api.v1 import photo_upload
 from app.api.v1.disease_prediction import prediction_pth
 from app.api.v1.farm import farm_router
-from app.utilities.utilities import generate_token
+from app.utils.utilities import generate_token
 import logging
 import os 
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.interval import IntervalTrigger
+from app.services.analytics_cache import refresh_all_labs_analytics
 
 from fastapi.staticfiles import StaticFiles
 
@@ -26,6 +29,16 @@ UPLOAD_FOLDER = "uploaded_photos"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 loop = None
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(
+    func=refresh_all_labs_analytics,
+    trigger=IntervalTrigger(minutes=5),
+    id='analytics_refresh',
+    replace_existing=True
+)
+
+
 
 
 @asynccontextmanager
@@ -40,7 +53,6 @@ async def lifespan(app: FastAPI):
         logging.StreamHandler()                   
     ]
 )
-    
     await connect_db()
     await connect_redis()
     print("Initalized the mongodb and redis ")
@@ -49,9 +61,10 @@ async def lifespan(app: FastAPI):
     user_services = UserService()
     await user_services.init_indexes()
     print("Created indexes")
-    
+    scheduler.start()
     yield
     await close_db()
+    scheduler.shutdown()
     await close_redis()
     mqtt_service.stop()
     print("Shutting down... Cleanup resources")
@@ -81,7 +94,9 @@ app.include_router(sensors.router,prefix="/sensors-history",tags=['sensors-histo
 app.include_router(register_sensors.router)
 app.include_router(api_key.router)
 app.include_router(device.router)
+app.include_router(firmware.router)
 app.include_router(actuator.router)
+app.include_router(analytics.router)
 # app.include_router(prediction.app,prefix='/prediction',tags=['disease','predictions'])
 app.include_router(prediction_pth.app,prefix='/torch')
 app.include_router(photo_upload.app,prefix='/upload')
