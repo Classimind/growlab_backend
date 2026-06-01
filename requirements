@@ -24,3 +24,4 @@ python-multipart
 livekit-api
 tzdata
 apscheduler
+pandas
