@@ -22,7 +22,6 @@ import os
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from app.services.analytics_cache import refresh_all_labs_analytics
-
 from fastapi.staticfiles import StaticFiles
 
 UPLOAD_FOLDER = "uploaded_photos"
@@ -37,9 +36,6 @@ scheduler.add_job(
     id='analytics_refresh',
     replace_existing=True
 )
-
-
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
