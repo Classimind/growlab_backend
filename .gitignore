@@ -4,3 +4,4 @@ hydroenv
 /app/.env
 .log
 aihydroponics.log
+firmwares
