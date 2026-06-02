@@ -36,6 +36,7 @@ class UserService:
                     "fcm_token": token
                 }
             },
+            upsert=True
         )
 
         return result.modified_count > 0
