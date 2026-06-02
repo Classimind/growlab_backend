@@ -30,12 +30,12 @@ class UserService:
             return False
 
         result = await self.collection.update_one(
-            {"_id": user_id},
+            {"_id": ObjectId(user_id)},
             {
                 "$set": {
                     "fcm_token": token
                 }
-            }
+            },
         )
 
         return result.modified_count > 0
