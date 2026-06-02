@@ -25,3 +25,4 @@ livekit-api
 tzdata
 apscheduler
 pandas
+firebase-admin

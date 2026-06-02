@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings
-from typing import List,ClassVar
+from typing import List,ClassVar,Optional
 import os
 from pydantic import Field
 
@@ -34,14 +34,19 @@ class Settings(BaseSettings):
     CHUNK_SIZE: ClassVar[int] = 1024 * 1024
     RABBITMQ_URL: str = os.getenv("RABBITMQ_URL", "amqp://guest:guest@localhost/")
     FIRMWARE_ROOT:str = "firmwares"
+
+    # Firebase configuration
+    firebase_cred_path: str = Field("hydroponics.json", env="FIREBASE_CRED_PATH")
+    firebase_cred_json: Optional[str] = Field(None, env="FIREBASE_CRED_JSON")
+
     # Security / session
     SECRET_KEY: str = "supersecretkey"
     DEBUG: bool = True
 
     def model_post_init(self, __context=None):
         # Build the Mongo URI after all other fields are loaded
-        self.MONGO_URI = f"mongodb://{self.MONGO_USER}:{self.MONGO_PASSWORD}@{self.MONGO_HOST}:{self.MONGO_PORT}/"
-        # self.MONGO_URI = f"mongodb://localhost:{self.MONGO_PORT}"
+        # self.MONGO_URI = f"mongodb://{self.MONGO_USER}:{self.MONGO_PASSWORD}@{self.MONGO_HOST}:{self.MONGO_PORT}/"
+        self.MONGO_URI = f"mongodb://localhost:{self.MONGO_PORT}"
 
         # Parse ALLOWED_ORIGINS from env string
         origins = os.getenv("ALLOWED_ORIGINS")

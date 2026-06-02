@@ -18,7 +18,6 @@ async def get_plants(user=Depends(get_current_user)):
     Retrieve all plants from MongoDB or Redis cache.
     Returns a list of Plant objects.
     """
-    print(user)
     cache_key = "all_plants"
     cached = await get_cache(cache_key)
     if cached:

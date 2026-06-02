@@ -3,10 +3,10 @@ from fastapi import FastAPI,Query,HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from contextlib import asynccontextmanager
-from app.api.v1 import user
+from app.api.v1 import notification, user
 from app.db.clients import connect_db,close_db
 from app.services.cache import connect_redis,close_redis
-from app.api.v1 import plant_database,app_ws,sensors,register_sensors,actuator,api_key,device,firmware,analytics
+from app.api.v1 import plant_database,app_ws,sensors,register_sensors,actuator,api_key,device,firmware,analytics,notification
 from app.services.mqtt_service import mqtt_service
 import asyncio
 from app.services.user_service import UserService
@@ -23,6 +23,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from app.services.analytics_cache import refresh_all_labs_analytics
 from fastapi.staticfiles import StaticFiles
+from app.core.firebase import init_firebase
 
 UPLOAD_FOLDER = "uploaded_photos"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -51,6 +52,7 @@ async def lifespan(app: FastAPI):
 )
     await connect_db()
     await connect_redis()
+    init_firebase()
     print("Initalized the mongodb and redis ")
     await mqtt_service.start(loop)
     # Create the indexes
@@ -89,6 +91,7 @@ app.include_router(farm_router,prefix='/labs',tags=['farm/lab'])
 app.include_router(sensors.router,prefix="/sensors-history",tags=['sensors-history'])
 app.include_router(register_sensors.router)
 app.include_router(api_key.router)
+app.include_router(notification.router,prefix='/notifications',tags=['notifications'])
 app.include_router(device.router)
 app.include_router(firmware.router)
 app.include_router(actuator.router)
