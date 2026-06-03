@@ -261,7 +261,7 @@ async def send_actuator_command(
             mqtt_service.publish,
             actuator_status.actuator_id,
             actuator_status.value,
-            qos=0
+            qos=1
         )
 
         db_task = actuator_status_service.create_actuator_status(actuator_status)

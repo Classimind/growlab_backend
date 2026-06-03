@@ -59,6 +59,7 @@ class MqttService:
             return True
         else:
             return False
+    
 
     def on_message(self,client,userdata,msg):
         from app.services.ws_connection_manager import manager
@@ -89,3 +90,7 @@ class MqttService:
 
 
 mqtt_service = MqttService("hydroponics","hydroponics@",os.getenv("BROKER_URL"))
+
+
+
+
