@@ -3,8 +3,6 @@
 ## 📄 Documentation
 For detailed documentation, see [DOCUMENTATION.md](DOCUMENTATION.md)
 
----
-
 ## ⚙️ Deployment Setup
 
 ### 1. Create `.env` File
