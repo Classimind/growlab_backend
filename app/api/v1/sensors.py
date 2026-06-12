@@ -158,15 +158,15 @@ async def get_latest_sensor(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# @router.get("/recent/{sensor_id}")
-# async def get_latest_sensor_data(sensor_id: str):
-#     try:
-#         data = await sensor_service.get_recent_sensor_data(sensor_id)
-#         return {"success": True, "count": len(data), "data": data}
-#     except HTTPException as e:
-#         raise e
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=f"Error fetching sensor data: {str(e)}")
+@router.get("/recent/{farm_id}")
+async def get_latest_sensor_data(farm_id: str):
+    try:
+        data = await sensor_service.get_latest_sensor_data_by_farm(farm_id)
+        return {"success": True,  "data": data}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching sensor data: {str(e)}")
     
 @router.get("/recent/{sensor_id}")
 async def get_recent_sensor_data(

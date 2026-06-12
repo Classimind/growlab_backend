@@ -68,27 +68,78 @@ class CollectSensorValueService:
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error retrieving sensor data: {str(e)}")
         
-    async def get_recent_sensor_data(self, sensor_id: str):
+    async def get_latest_sensor_data_by_farm(self, farm_id: str):
         try:
-            collection = self.get_collection()
-
-            cursor = collection.find(
-                {"sensor_id": sensor_id}
-            ).sort("timestamp", -1).limit(25)
-
-            sensor_data = await cursor.to_list(length=25)
-
-            if not sensor_data:
-                raise HTTPException(status_code=404, detail="Sensor data not found")
+            sensor_values = self.get_collection()
             
-            for doc in sensor_data:
-                doc["id"] = str(doc["_id"])
-                del doc["_id"]
 
-            return sensor_data
+            pipeline = [
+                # 1. Filter by farm
+                {
+                    "$match": {"lab_id": farm_id}
+                },
+
+                # 2. Sort so we can pick latest value per sensor
+                {
+                    "$sort": {"created": -1}
+                },
+
+                # 3. Keep only latest record per sensor_id
+                {
+                    "$group": {
+                        "_id": "$sensor_id",
+                        "latest_value": {"$first": "$value"},
+                        "created": {"$first": "$created"},
+                        "lab_id": {"$first": "$lab_id"}
+                    }
+                },
+
+                # 4. Join with sensors collection
+                {
+                    "$lookup": {
+                        "from": "sensors",
+                        "localField": "_id",
+                        "foreignField": "sensor_id",
+                        "as": "sensors"
+                    }
+                },
+
+                # 5. Flatten sensor info
+                {
+                    "$unwind": {
+                        "path": "$sensors",
+                        "preserveNullAndEmptyArrays": True
+                    }
+                },
+
+                # 6. Format output
+                {
+                    "$project": {
+                        "_id": 0,
+                        "sensor_id": "$_id",
+                        "value": "$latest_value",
+                        "created": 1,
+                        "lab_id": 1,
+                        "sensor_name": "$sensors.name",
+                        "sensor_type": "$sensors.type",
+                        "unit": "$sensors.unit"
+                    }
+                }
+            ]
+
+            result = await sensor_values.aggregate(pipeline).to_list(length=100)
+
+            if not result:
+                raise HTTPException(status_code=404, detail="No sensors found for this farm")
+
+            return result
 
         except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Error retrieving sensor data: {str(e)}")
+            raise HTTPException(
+                status_code=500,
+                detail=f"Error fetching farm sensors: {str(e)}"
+            )
+
 
     async def get_recent_sensors_data(self, limit: int = 25):
         """
