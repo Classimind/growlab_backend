@@ -19,24 +19,26 @@ from app.api.v1.farm import farm_router
 from app.utils.utilities import generate_token
 import logging
 import os 
-from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from app.services.analytics_cache import refresh_all_labs_analytics
 from fastapi.staticfiles import StaticFiles
 from app.core.firebase import init_firebase
+
 
 UPLOAD_FOLDER = "uploaded_photos"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 loop = None
 
-scheduler = BackgroundScheduler()
+scheduler = AsyncIOScheduler()
 scheduler.add_job(
     func=refresh_all_labs_analytics,
-    trigger=IntervalTrigger(minutes=5),
+    trigger=IntervalTrigger(minutes=1),
     id='analytics_refresh',
     replace_existing=True
 )
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

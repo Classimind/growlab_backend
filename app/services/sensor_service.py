@@ -69,78 +69,93 @@ class CollectSensorValueService:
             raise HTTPException(status_code=500, detail=f"Error retrieving sensor data: {str(e)}")
         
     async def get_latest_sensor_data_by_farm(self, farm_id: str):
-        try:
-            sensor_values = self.get_collection()
-            
+            try:
+                sensor_values = self.get_collection()
 
-            pipeline = [
-                # 1. Filter by farm
-                {
-                    "$match": {"lab_id": farm_id}
-                },
+                pipeline = [
+                    {
+                        "$match": {"lab_id": farm_id}
+                    },
 
-                # 2. Sort so we can pick latest value per sensor
-                {
-                    "$sort": {"created": -1}
-                },
+                    {
+                        "$sort": {"created": -1}
+                    },
 
-                # 3. Keep only latest record per sensor_id
-                {
-                    "$group": {
-                        "_id": "$sensor_id",
-                        "latest_value": {"$first": "$value"},
-                        "created": {"$first": "$created"},
-                        "lab_id": {"$first": "$lab_id"}
+                    {
+                        "$group": {
+                            "_id": "$sensor_id",
+                            "latest_value": {"$first": "$value"},
+                            "created": {"$first": "$created"},
+                            "lab_id": {"$first": "$lab_id"}
+                        }
+                    },
+
+                    # 4. Join with sensors collection (sensor_value.sensor_id is a string, sensors._id is ObjectId)
+                    {
+                        "$lookup": {
+                            "from": "sensors",
+                            "let": {"sid": "$_id"},
+                            "pipeline": [
+                                {
+                                    "$match": {
+                                        "$expr": {
+                                            "$eq": [
+                                                "$_id",
+                                                {
+                                                    "$convert": {
+                                                        "input": "$$sid",
+                                                        "to": "objectId",
+                                                        "onError": None,
+                                                        "onNull": None
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ],
+                            "as": "sensors"
+                        }
+                    },
+
+                    # 5. Flatten sensor info
+                    {
+                        "$unwind": {
+                            "path": "$sensors",
+                            "preserveNullAndEmptyArrays": True
+                        }
+                    },
+
+                    # 6. Format output
+                    {
+                        "$project": {
+                            "_id": 0,
+                            "sensor_id": "$_id",
+                            "value": "$latest_value",
+                            "created": "$created",
+                            "lab_id": "$lab_id",
+                            "sensor_name": {"$ifNull": ["$sensors.sensor_name", "Unknown"]},
+                            "sensor_type": "$sensors.type",
+                            "unit": "$sensors.unit"
+                        }
                     }
-                },
+                ]
 
-                # 4. Join with sensors collection
-                {
-                    "$lookup": {
-                        "from": "sensors",
-                        "localField": "_id",
-                        "foreignField": "sensor_id",
-                        "as": "sensors"
-                    }
-                },
+                result = await sensor_values.aggregate(pipeline).to_list(length=100)
 
-                # 5. Flatten sensor info
-                {
-                    "$unwind": {
-                        "path": "$sensors",
-                        "preserveNullAndEmptyArrays": True
-                    }
-                },
+                if not result:
+                    raise HTTPException(status_code=404, detail="No sensors found for this farm")
 
-                # 6. Format output
-                {
-                    "$project": {
-                        "_id": 0,
-                        "sensor_id": "$_id",
-                        "value": "$latest_value",
-                        "created": 1,
-                        "lab_id": 1,
-                        "sensor_name": "$sensors.name",
-                        "sensor_type": "$sensors.type",
-                        "unit": "$sensors.unit"
-                    }
-                }
-            ]
+                return result
 
-            result = await sensor_values.aggregate(pipeline).to_list(length=100)
+            except HTTPException:
+                raise
 
-            if not result:
-                raise HTTPException(status_code=404, detail="No sensors found for this farm")
-
-            return result
-
-        except Exception as e:
-            raise HTTPException(
-                status_code=500,
-                detail=f"Error fetching farm sensors: {str(e)}"
-            )
-
-
+            except Exception as e:
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Error fetching farm sensors: {str(e)}"
+                )
     async def get_recent_sensors_data(self, limit: int = 25):
         """
         Get latest sensor readings per sensor_id, including the sensor name
