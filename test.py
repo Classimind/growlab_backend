@@ -1,5 +1,4 @@
 import paho.mqtt.client as mqtt
-
 BROKER = "mqtt.safalstha.com.np"
 PORT = 1883
 TOPIC = "actuators/+/status"
